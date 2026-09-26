@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Dr Alla · Buenos Aires</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Заголовки: Cormorant Garamond, как на флаере «Masajes Buenos Aires». Текст: Onest (есть кириллица) -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="preload" as="image" href="hero.webp">
+<script src="config.js"></script>
+<style>
+  /* Палитра «чёрный и табак»: тёплый почти-чёрный + один акцент, как свет свечей на фото.
+     Радиусы: кнопки и чипы — пилюля, карточки 20px, поля 14px. */
+  :root {
+    --bg: #f3f1ee; --surface: #fbfaf8; --surface-2: #ebe7e2; --line: rgba(30, 24, 20, .12);
+    --text: #171412; --muted: #675f57; --accent: #7f5536; --accent-ink: #fbfaf8;
+    --accent-soft: rgba(127, 85, 54, .12); --danger: #b03a2e;
+    --shadow: 0 10px 30px rgba(60, 40, 25, .10);
+  }
+  :root[data-theme="dark"] {
+    --bg: #121110; --surface: #1c1a18; --surface-2: #262320; --line: rgba(239, 233, 225, .10);
+    --text: #efe9e1; --muted: #a59b90; --accent: #cfa87f; --accent-ink: #171412;
+    --accent-soft: rgba(207, 168, 127, .14); --danger: #e8816f;
+    --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { margin: 0; background: var(--bg); color: var(--text); }
+  body { font: 15px/1.5 Onest, system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+  body.flow { padding-bottom: 110px; }
+  button { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; padding: 0; }
+  a { color: inherit; text-decoration: none; }
+  i.ph { font-size: 20px; line-height: 1; }
+  .hidden { display: none !important; }
+  .display { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; letter-spacing: -.01em; line-height: 1.05; }
+
+  /* Фрагменты коллажа hero.webp (1254×1254): верхняя панель, нижняя левая, нижняя правая */
+  .photo { background: #2a221c url(hero.webp) no-repeat; }
+  .photo-top { background-size: auto 205%; background-position: 72% 0; }
+  .photo-bl { background-size: 201.6% auto; background-position: 0 100%; }
+  .photo-br { background-size: 201.6% auto; background-position: 100% 100%; }
+
+  /* ---------- Главная ---------- */
+  .hero { position: relative; min-height: 78dvh; display: flex; flex-direction: column; justify-content: flex-end; }
+  .hero .photo { position: absolute; inset: 0; }
+  .hero::after { content: ""; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(18,17,16,.10) 0%, rgba(18,17,16,.05) 35%, rgba(18,17,16,.70) 72%, var(--bg) 100%); }
+  .hero-body { position: relative; z-index: 1; padding: 0 20px 26px; color: #f5efe7; }
+  :root:not([data-theme="dark"]) .hero-body { color: var(--text); }
+  :root:not([data-theme="dark"]) .hero::after {
+    background: linear-gradient(180deg, rgba(18,17,16,.05) 0%, rgba(18,17,16,.0) 40%, rgba(243,241,238,.75) 76%, var(--bg) 100%); }
+  .hero h1 { font-size: 52px; margin: 0 0 8px; }
+  .hero p { margin: 0 0 20px; max-width: 30ch; font-size: 16px; opacity: .9; }
+  .langs { position: absolute; top: 14px; right: 14px; z-index: 2; display: flex; padding: 3px; border-radius: 999px;
+    background: rgba(18,17,16,.45); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,.14); }
+  .langs button { color: #f5efe7; font-size: 12px; font-weight: 600; padding: 6px 11px; border-radius: 999px; letter-spacing: .04em; }
+  .langs button.on { background: #f5efe7; color: #171412; }
+
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 999px;
+    padding: 15px 22px; font-weight: 600; font-size: 16px; white-space: nowrap; transition: transform .15s ease, opacity .15s; }
+  .btn:active { transform: scale(.98); }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); }
+  .btn-ghost { background: var(--surface-2); color: var(--text); }
+  .btn-block { width: 100%; }
+
+  section.block { padding: 36px 20px 0; }
+  .h2 { font-size: 34px; margin: 0 0 16px; }
+
+  .about { display: grid; grid-template-columns: 112px 1fr; gap: 16px; align-items: center; }
+  .about .photo { aspect-ratio: 1; border-radius: 20px; }
+  .about p { margin: 0; color: var(--muted); }
+  .creds { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .cred { display: inline-flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 999px; padding: 7px 12px; font-size: 13px; }
+  .cred i { color: var(--accent); font-size: 16px; }
+
+  .svc { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 18px; margin-bottom: 12px; }
+  .svc-top { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+  .svc-name { font-weight: 600; font-size: 16.5px; line-height: 1.3; }
+  .svc-from { color: var(--accent); font-weight: 600; white-space: nowrap; font-size: 14px; }
+  .svc-desc { color: var(--muted); font-size: 13.5px; margin: 4px 0 14px; }
+  .opts { display: flex; flex-wrap: wrap; gap: 8px; }
+  .opt { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 999px;
+    padding: 8px 8px 8px 14px; font-size: 14px; background: var(--bg); transition: transform .15s, border-color .15s; }
+  .opt b { font-weight: 600; }
+  .opt .go { width: 26px; height: 26px; border-radius: 999px; background: var(--accent); color: var(--accent-ink);
+    display: grid; place-items: center; }
+  .opt .go i { font-size: 14px; }
+  .opt:active { transform: scale(.97); border-color: var(--accent); }
+
+  .studio { border-radius: 20px; overflow: hidden; background: var(--surface); border: 1px solid var(--line); }
+  .studio .photo { aspect-ratio: 16 / 9; }
+  .studio-body { padding: 6px 18px; }
+  .row { display: flex; align-items: center; gap: 14px; padding: 14px 0; }
+  .row + .row { border-top: 1px solid var(--line); }
+  .row .ic { width: 38px; height: 38px; border-radius: 12px; background: var(--accent-soft); color: var(--accent);
+    display: grid; place-items: center; flex: none; }
+  .row .tx { flex: 1; min-width: 0; }
+  .row small { display: block; color: var(--muted); font-size: 12.5px; }
+  .row .arrow { color: var(--muted); }
+  .footer-cta { padding: 28px 20px 36px; }
+
+  /* ---------- Запись ---------- */
+  .flow-top { position: sticky; top: 0; z-index: 5; background: var(--bg); padding: 12px 20px 10px; }
+  .flow-nav { display: flex; align-items: center; gap: 10px; min-height: 36px; }
+  .back { width: 36px; height: 36px; border-radius: 999px; background: var(--surface-2); display: grid; place-items: center; }
+  .progress { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; flex: 1; }
+  .progress span { height: 4px; border-radius: 999px; background: var(--surface-2); overflow: hidden; position: relative; }
+  .progress span::after { content: ""; position: absolute; inset: 0; background: var(--accent); transform: scaleX(0);
+    transform-origin: left; transition: transform .35s cubic-bezier(.16,1,.3,1); }
+  .progress span.done::after { transform: scaleX(1); }
+  .flow-title { font-size: 32px; margin: 14px 0 0; }
+
+  .step { padding: 4px 20px 0; }
+  .step.enter { animation: stepIn .38s cubic-bezier(.16,1,.3,1); }
+  @keyframes stepIn { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: none; } }
+
+  .picked { display: flex; gap: 12px; align-items: center; background: var(--surface); border: 1px solid var(--line);
+    border-radius: 20px; padding: 12px; margin-top: 8px; }
+  .picked .photo { width: 52px; height: 52px; border-radius: 14px; flex: none; }
+  .picked b { display: block; font-weight: 600; line-height: 1.25; }
+  .picked small { color: var(--muted); }
+
+  .label { font-size: 13px; font-weight: 600; color: var(--muted); margin: 24px 0 10px; display: flex; align-items: center; gap: 6px; }
+  .label.err { color: var(--danger); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chips.scroll { flex-wrap: nowrap; overflow-x: auto; margin: 0 -20px; padding: 2px 20px 6px; scroll-snap-type: x proximity; scroll-padding-inline: 20px; scrollbar-width: none; }
+  .chips.scroll::-webkit-scrollbar { display: none; }
+  .chip { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 10px 16px;
+    white-space: nowrap; font-weight: 500; transition: background .15s, color .15s, border-color .15s, transform .15s; }
+  .chip:active { transform: scale(.96); }
+  .chip.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .chip small { opacity: .7; margin-left: 6px; font-weight: 500; }
+  .day { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 62px; padding: 10px 8px 12px;
+    border-radius: 20px; scroll-snap-align: start; }
+  .day span { font-size: 12px; opacity: .75; text-transform: capitalize; }
+  .day b { font-size: 22px; font-weight: 600; line-height: 1.1; }
+  .times-group + .times-group { margin-top: 14px; }
+  .times-group h4 { margin: 0 0 8px; font-size: 12.5px; font-weight: 500; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+  .times { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .times .chip { padding: 10px 0; text-align: center; }
+  .empty { color: var(--muted); font-size: 14px; background: var(--surface); border: 1px dashed var(--line); border-radius: 20px; padding: 16px; }
+
+  .field { display: grid; gap: 6px; margin-top: 14px; }
+  .field label { font-size: 13px; font-weight: 600; color: var(--muted); }
+  .field label.err { color: var(--danger); }
+  .field .hint { font-size: 12px; color: var(--muted); }
+  input, textarea { width: 100%; font: inherit; font-size: 16px; color: var(--text); background: var(--surface);
+    border: 1px solid var(--line); border-radius: 14px; padding: 13px 14px; outline: none; transition: border-color .15s, box-shadow .15s; }
+  input::placeholder, textarea::placeholder { color: var(--muted); opacity: .8; }
+  input:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  textarea { min-height: 88px; resize: vertical; }
+  .seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; background: var(--surface-2); padding: 4px; border-radius: 999px; }
+  .seg button { padding: 10px 0; border-radius: 999px; font-weight: 600; font-size: 14px; color: var(--muted); }
+  .seg button.on { background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
+
+  .summary { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; margin-top: 8px; }
+  .summary .photo { height: 120px; background-size: 205% auto; background-position: 72% 18%; }
+  .summary .sum-body { padding: 4px 18px; }
+  .sum-row { display: flex; gap: 12px; padding: 13px 0; align-items: flex-start; }
+  .sum-row + .sum-row { border-top: 1px solid var(--line); }
+  .sum-row i { color: var(--accent); margin-top: 1px; }
+  .sum-row .k { font-size: 12.5px; color: var(--muted); }
+  .sum-row .v { font-weight: 500; }
+  .total { display: flex; justify-content: space-between; align-items: baseline; padding: 16px 18px; background: var(--accent-soft); }
+  .total b { font-size: 24px; font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; }
+  .note { display: flex; gap: 10px; color: var(--muted); font-size: 13.5px; margin: 16px 0 0; align-items: flex-start; }
+  .note i { color: var(--accent); }
+  .edit { color: var(--accent); font-size: 13px; font-weight: 600; }
+
+  .dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; padding: 12px 20px calc(14px + env(safe-area-inset-bottom));
+    background: linear-gradient(180deg, transparent, var(--bg) 30%); }
+  .toast { position: fixed; left: 20px; right: 20px; bottom: 96px; z-index: 7; background: var(--text); color: var(--bg);
+    padding: 12px 16px; border-radius: 14px; font-size: 14px; text-align: center; box-shadow: var(--shadow);
+    animation: stepIn .25s ease; }
+
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .step.enter, .toast { animation: none; }
+    * { transition: none !important; }
+  }
+  @media (min-width: 640px) { #app { max-width: 560px; margin: 0 auto; } .dock { max-width: 560px; margin: 0 auto; } }
+</style>
+</head>
+<body>
+<div id="app">
+
+<!-- ================= Главная ================= -->
+<main id="home">
+  <header class="hero">
+    <div class="photo photo-top" role="img" aria-label="Alla"></div>
+    <div class="langs" id="langs"></div>
+    <div class="hero-body">
+      <h1 class="display">Dr Alla</h1>
+      <p data-t="heroSub"></p>
+      <button class="btn btn-primary" id="heroCta"><i class="ph ph-calendar-plus"></i><span data-t="book"></span></button>
+    </div>
+  </header>
+
+  <section class="block reveal">
+    <div class="about">
+      <div class="photo photo-bl" role="img" aria-label=""></div>
+      <p data-t="about"></p>
+    </div>
+    <div class="creds" id="creds"></div>
+  </section>
+
+  <section class="block" id="services">
+    <h2 class="h2 display reveal" data-t="services"></h2>
+    <div id="svcList"></div>
+  </section>
+
+  <section class="block reveal">
+    <h2 class="h2 display" data-t="studio"></h2>
+    <div class="studio">
+      <div class="photo photo-br" role="img" aria-label=""></div>
+      <div class="studio-body">
+        <a class="row" id="mapLink" target="_blank" rel="noopener">
+          <span class="ic"><i class="ph ph-map-pin"></i></span>
+          <span class="tx"><span id="addr"></span><small data-t="openMap"></small></span>
+          <i class="ph ph-arrow-up-right arrow"></i>
+        </a>
+        <a class="row" id="tgLink" target="_blank" rel="noopener">
+          <span class="ic"><i class="ph ph-telegram-logo"></i></span>
+          <span class="tx"><span data-t="writeAlla"></span><small id="tgUser"></small></span>
+          <i class="ph ph-arrow-up-right arrow"></i>
+        </a>
+        <a class="row" id="waLink" target="_blank" rel="noopener">
+          <span class="ic"><i class="ph ph-whatsapp-logo"></i></span>
+          <span class="tx"><span id="phone"></span><small>WhatsApp</small></span>
+          <i class="ph ph-arrow-up-right arrow"></i>
+        </a>
+        <div class="row">
+          <span class="ic"><i class="ph ph-wallet"></i></span>
+          <span class="tx"><span id="pays"></span><small data-t="payment"></small></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="footer-cta reveal">
+    <button class="btn btn-primary btn-block" id="footCta"><i class="ph ph-calendar-plus"></i><span data-t="book"></span></button>
+  </div>
+</main>
+
+<!-- ================= Запись ================= -->
+<main id="flow" class="hidden">
+  <div class="flow-top">
+    <div class="flow-nav">
+      <button class="back" id="backBtn" aria-label="Back"><i class="ph ph-arrow-left"></i></button>
+      <div class="progress" id="progress"><span></span><span></span><span></span></div>
+    </div>
+    <h2 class="flow-title display" id="flowTitle"></h2>
+  </div>
+
+  <!-- Шаг: когда -->
+  <div class="step" id="stepWhen">
+    <div class="picked" id="pickedCard"></div>
+    <div id="durBlock">
+      <div class="label" id="lDur"><i class="ph ph-hourglass-medium"></i><span data-t="duration"></span></div>
+      <div class="chips" id="durs"></div>
+    </div>
+    <div class="label" id="lDate"><i class="ph ph-calendar-blank"></i><span data-t="date"></span></div>
+    <div class="chips scroll" id="dates"></div>
+    <div class="label" id="lTime"><i class="ph ph-clock"></i><span data-t="time"></span></div>
+    <div id="times"></div>
+  </div>
+
+  <!-- Шаг: контакты -->
+  <div class="step hidden" id="stepContact">
+    <div class="field">
+      <label for="name" id="lName" data-t="nameL"></label>
+      <input id="name" autocomplete="name">
+    </div>
+    <div class="field">
+      <label for="tel" data-t="telL"></label>
+      <input id="tel" type="tel" autocomplete="tel" inputmode="tel">
+      <span class="hint" data-t="telHint"></span>
+    </div>
+    <div class="field">
+      <label for="comment" data-t="commentL"></label>
+      <textarea id="comment"></textarea>
+      <span class="hint" data-t="commentHint"></span>
+    </div>
+    <div class="field">
+      <label data-t="payHow"></label>
+      <div class="seg" id="paySeg"></div>
+    </div>
+  </div>
+
+  <!-- Шаг: проверка -->
+  <div class="step hidden" id="stepReview">
+    <div class="summary" id="summary"></div>
+    <p class="note"><i class="ph ph-chat-circle-text"></i><span data-t="confirmNote"></span></p>
+    <p class="note"><i class="ph ph-telegram-logo"></i><a class="edit tg-alla" data-t="askAlla"></a></p>
+  </div>
+</main>
+
+</div>
+
+<div class="dock hidden" id="dock"><button class="btn btn-primary btn-block" id="dockBtn"></button></div>
+<div class="toast hidden" id="toast" role="status"></div>
+
+<script>
+const C = window.CONFIG;
+const tg = window.Telegram?.WebApp;
+const inTelegram = !!(tg && tg.initData);
+
+const T = {
+  ru: {
+    heroSub: "Массаж, мануальная терапия и реабилитация в уютной студии в Palermo",
+    book: "Записаться",
+    about: "Я врач ЛФК, мануальный терапевт, массажист и специалист по физической реабилитации. Подбираю технику под ваш запрос и состояние.",
+    creds: ["Врач ЛФК", "Мануальный терапевт", "Массажист", "Реабилитолог"],
+    writeAlla: "Написать Алле в Telegram", askAlla: "Остались вопросы? Напишите Алле", services: "Услуги", studio: "Студия", openMap: "Открыть на карте", payment: "Способы оплаты",
+    min: "мин", from: "от",
+    stepWhen: "Когда удобно?", stepContact: "Ваши контакты", stepReview: "Проверьте заявку",
+    duration: "Длительность", date: "Дата", time: "Время",
+    pickDate: "Сначала выберите дату, и появится свободное время.", morning: "Утро", day: "День", evening: "Вечер", noTimes: "На этот день свободного времени уже нет. Выберите другую дату.",
+    nameL: "Имя", namePh: "Как к вам обращаться",
+    telL: "Телефон или WhatsApp", telPh: "+54 9 11 ...", telHint: "Необязательно. Алла ответит в Telegram.",
+    commentL: "Пожелания", commentPh: "Что беспокоит, противопоказания, беременность",
+    commentHint: "Необязательно, но поможет подготовиться к сеансу.",
+    payHow: "Как удобнее оплатить",
+    next: "Далее", send: "Отправить заявку",
+    sService: "Услуга", sWhen: "Дата и время", sWho: "Имя", sPay: "Оплата", sWhere: "Адрес", total: "Итого", change: "Изменить",
+    confirmNote: "Это заявка. Алла подтвердит время в этом чате, обычно в течение пары часов.",
+    needWhen: "Выберите длительность, дату и время", needName: "Укажите имя",
+    notTg: "Отправка работает внутри Telegram. Откройте приложение через бота.",
+  },
+  es: {
+    heroSub: "Masajes, terapia manual y rehabilitación en un estudio cálido en Palermo",
+    book: "Reservar",
+    about: "Soy médica en kinesiología, terapeuta manual, masajista y especialista en rehabilitación física. Elijo la técnica según tu necesidad y tu estado.",
+    creds: ["Médica en kinesiología", "Terapeuta manual", "Masajista", "Rehabilitación"],
+    writeAlla: "Escribile a Alla por Telegram", askAlla: "¿Tenés dudas? Escribile a Alla", services: "Servicios", studio: "Estudio", openMap: "Ver en el mapa", payment: "Formas de pago",
+    min: "min", from: "desde",
+    stepWhen: "¿Cuándo te queda bien?", stepContact: "Tus datos", stepReview: "Revisá tu reserva",
+    duration: "Duración", date: "Fecha", time: "Horario",
+    pickDate: "Primero elegí una fecha y vas a ver los horarios libres.", morning: "Mañana", day: "Tarde", evening: "Noche", noTimes: "Ya no quedan horarios para este día. Elegí otra fecha.",
+    nameL: "Nombre", namePh: "¿Cómo te llamás?",
+    telL: "Teléfono o WhatsApp", telPh: "+54 9 11 ...", telHint: "Opcional. Alla te responde por Telegram.",
+    commentL: "Comentarios", commentPh: "Molestias, contraindicaciones, embarazo",
+    commentHint: "Opcional, pero ayuda a preparar la sesión.",
+    payHow: "¿Cómo preferís pagar?",
+    next: "Siguiente", send: "Enviar solicitud",
+    sService: "Servicio", sWhen: "Fecha y horario", sWho: "Nombre", sPay: "Pago", sWhere: "Dirección", total: "Total", change: "Cambiar",
+    confirmNote: "Es una solicitud. Alla te confirma el horario por este chat, normalmente en un par de horas.",
+    needWhen: "Elegí duración, fecha y horario", needName: "Escribí tu nombre",
+    notTg: "El envío funciona dentro de Telegram. Abrí la app desde el bot.",
+  },
+  en: {
+    heroSub: "Massage, manual therapy and rehabilitation in a cosy studio in Palermo",
+    book: "Book now",
+    about: "I'm a physician in exercise therapy, a manual therapist, massage therapist and physical rehabilitation specialist. I tailor the technique to your needs.",
+    creds: ["Exercise therapy MD", "Manual therapist", "Massage therapist", "Rehabilitation"],
+    writeAlla: "Message Alla on Telegram", askAlla: "Questions? Message Alla", services: "Services", studio: "Studio", openMap: "Open in maps", payment: "Payment methods",
+    min: "min", from: "from",
+    stepWhen: "When suits you?", stepContact: "Your details", stepReview: "Review your request",
+    duration: "Duration", date: "Date", time: "Time",
+    pickDate: "Pick a date first to see available times.", morning: "Morning", day: "Afternoon", evening: "Evening", noTimes: "No times left for this day. Please pick another date.",
+    nameL: "Name", namePh: "What should we call you",
+    telL: "Phone or WhatsApp", telPh: "+54 9 11 ...", telHint: "Optional. Alla will reply in Telegram.",
+    commentL: "Notes", commentPh: "Complaints, contraindications, pregnancy",
+    commentHint: "Optional, but helps prepare the session.",
+    payHow: "Preferred payment",
+    next: "Next", send: "Send request",
+    sService: "Service", sWhen: "Date and time", sWho: "Name", sPay: "Payment", sWhere: "Address", total: "Total", change: "Change",
+    confirmNote: "This is a request. Alla will confirm the time in this chat, usually within a couple of hours.",
+    needWhen: "Choose duration, date and time", needName: "Please enter your name",
+    notTg: "Sending works inside Telegram. Open the app from the bot.",
+  },
+};
+const CRED_ICONS = ["ph-first-aid", "ph-hand", "ph-hand-heart", "ph-person-simple-walk"];
+const STEPS = ["when", "contact", "review"];
+
+const guess = (tg?.initDataUnsafe?.user?.language_code || navigator.language || "ru").slice(0, 2);
+let lang = T[guess] ? guess : "en";
+const state = { screen: "home", step: 0, svc: null, opt: null, date: null, time: null, pay: C.payments[0] };
+
+const $ = (id) => document.getElementById(id);
+const t = (k) => T[lang][k];
+const locale = () => ({ ru: "ru-RU", es: "es-AR", en: "en-US" })[lang];
+const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// ---------- Тема ----------
+function applyTheme() {
+  const dark = inTelegram ? tg.colorScheme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  document.documentElement.dataset.theme = dark ? "dark" : "light";
+  if (inTelegram) {
+    const css = getComputedStyle(document.documentElement);
+    const bg = css.getPropertyValue("--bg").trim();
+    tg.setHeaderColor(bg); tg.setBackgroundColor(bg);
+    if (tg.setBottomBarColor) tg.setBottomBarColor(bg);
+    tg.MainButton.setParams({ color: css.getPropertyValue("--accent").trim(), text_color: css.getPropertyValue("--accent-ink").trim() });
+  }
+}
+
+// ---------- Главная ----------
+function renderHome() {
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-t]").forEach((e) => (e.textContent = t(e.dataset.t)));
+  $("name").placeholder = t("namePh");
+  $("tel").placeholder = t("telPh");
+  $("comment").placeholder = t("commentPh");
+  $("addr").textContent = C.address;
+  $("mapLink").href = C.mapUrl;
+  $("phone").textContent = C.phone;
+  $("waLink").href = C.whatsapp;
+  $("tgLink").href = `https://t.me/${C.telegram}`;
+  $("tgUser").textContent = "@" + C.telegram;
+  $("pays").textContent = C.payments.join(", ");
+
+  $("langs").replaceChildren(...["ru", "es", "en"].map((l) => {
+    const b = el("button", l === lang ? "on" : "", l.toUpperCase());
+    b.onclick = () => { lang = l; haptic("select"); renderAll(); };
+    return b;
+  }));
+
+  $("creds").replaceChildren(...t("creds").map((c, i) => el("span", "cred", `<i class="ph ${CRED_ICONS[i]}"></i>${esc(c)}`)));
+
+  $("svcList").replaceChildren(...C.services.map((s) => {
+    const card = el("article", "svc reveal");
+    const minP = Math.min(...s.options.map((o) => o.usd));
+    card.innerHTML = `<div class="svc-top"><div class="svc-name">${esc(s.name[lang])}</div>
+      <div class="svc-from">${s.options.length > 1 ? t("from") + " " : ""}${minP} USD</div></div>
+      <div class="svc-desc">${esc(s.desc[lang])}</div><div class="opts"></div>`;
+    s.options.forEach((o) => {
+      const b = el("button", "opt", `<span><b>${o.min}</b> ${t("min")}, ${o.usd} USD</span><span class="go"><i class="ph ph-arrow-right"></i></span>`);
+      b.onclick = () => startFlow(s, o);
+      card.querySelector(".opts").append(b);
+    });
+    return card;
+  }));
+  observeReveal();
+}
+
+function observeReveal() {
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    document.querySelectorAll(".reveal").forEach((e) => e.classList.add("in"));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => entries.forEach((en) => {
+    if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+  }), { threshold: 0.12 });
+  document.querySelectorAll(".reveal:not(.in)").forEach((e) => io.observe(e));
+}
+
+// ---------- Запись ----------
+function startFlow(svc, opt) {
+  haptic("impact");
+  Object.assign(state, { screen: "flow", step: 0, svc, opt: opt || (svc.options.length === 1 ? svc.options[0] : null) });
+  if (state.date && !freeHours().includes(state.time)) state.time = null;
+  if (!$("name").value && tg?.initDataUnsafe?.user) $("name").value = tg.initDataUnsafe.user.first_name || "";
+  $("home").classList.add("hidden");
+  $("flow").classList.remove("hidden");
+  document.body.classList.add("flow");
+  scrollTo(0, 0);
+  renderFlow(true);
+}
+
+function goBack() {
+  haptic("select");
+  if (state.step > 0) { state.step--; renderFlow(true); scrollTo(0, 0); return; }
+  state.screen = "home";
+  $("flow").classList.add("hidden");
+  $("home").classList.remove("hidden");
+  document.body.classList.remove("flow");
+  $("dock").classList.add("hidden");
+  if (inTelegram) { tg.BackButton.hide(); tg.MainButton.hide(); }
+  document.getElementById("services").scrollIntoView();
+}
+
+function goNext() {
+  const step = STEPS[state.step];
+  if (step === "when") {
+    const miss = { lDur: !state.opt, lDate: !state.date, lTime: !state.time };
+    Object.entries(miss).forEach(([id, bad]) => $(id).classList.toggle("err", bad));
+    const first = Object.keys(miss).find((k) => miss[k]);
+    if (first) return fail(t("needWhen"), first);
+  }
+  if (step === "contact") {
+    const bad = !$("name").value.trim();
+    $("lName").classList.toggle("err", bad);
+    if (bad) { fail(t("needName"), "lName"); $("name").focus(); return; }
+  }
+  if (step === "review") return submit();
+  haptic("impact");
+  state.step++;
+  renderFlow(true);
+  scrollTo(0, 0);
+}
+
+function fail(msg, anchorId) {
+  haptic("error");
+  toast(msg);
+  $(anchorId)?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+}
+
+function workDates() {
+  const out = [];
+  const d = new Date(); d.setHours(0, 0, 0, 0);
+  for (let i = 0; i < C.daysAhead; i++) {
+    const x = new Date(d); x.setDate(d.getDate() + i);
+    if (C.workDays.includes(x.getDay())) out.push(x);
+  }
+  return out;
+}
+const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+const fromIso = (s) => new Date(s + "T12:00:00");
+
+function freeHours() {
+  // Сегодня не показываем часы, до которых осталось меньше 2 часов
+  if (state.date !== iso(new Date())) return C.hours;
+  const limit = new Date().getHours() + 2;
+  return C.hours.filter((h) => parseInt(h) >= limit);
+}
+
+function chip(html, on, onClick, cls = "") {
+  const b = el("button", `chip ${cls} ${on ? "on" : ""}`, html);
+  b.onclick = () => { haptic("select"); onClick(); renderFlow(false); };
+  return b;
+}
+
+function renderFlow(animate) {
+  const step = STEPS[state.step];
+  const s = state.svc;
+  $("flowTitle").textContent = t({ when: "stepWhen", contact: "stepContact", review: "stepReview" }[step]);
+  [...$("progress").children].forEach((p, i) => p.classList.toggle("done", i <= state.step));
+  const ids = { when: "stepWhen", contact: "stepContact", review: "stepReview" };
+  Object.entries(ids).forEach(([k, id]) => {
+    const node = $(id);
+    node.classList.toggle("hidden", k !== step);
+    if (k === step && animate && !reduceMotion) { node.classList.remove("enter"); void node.offsetWidth; node.classList.add("enter"); }
+  });
+
+  if (step === "when") {
+    $("pickedCard").innerHTML = `<div class="photo photo-top"></div><div><b>${esc(s.name[lang])}</b>
+      <small>${state.opt ? `${state.opt.min} ${t("min")}, ${state.opt.usd} USD` : esc(s.desc[lang])}</small></div>`;
+    $("durBlock").classList.toggle("hidden", s.options.length < 2);
+    $("durs").replaceChildren(...s.options.map((o) =>
+      chip(`${o.min} ${t("min")}<small>${o.usd} USD</small>`, state.opt === o, () => { state.opt = o; $("lDur").classList.remove("err"); })));
+
+    const wd = new Intl.DateTimeFormat(locale(), { weekday: "short" });
+    const mo = new Intl.DateTimeFormat(locale(), { month: "short" });
+    $("dates").replaceChildren(...workDates().map((d) =>
+      chip(`<span>${wd.format(d)}</span><b>${d.getDate()}</b><span>${mo.format(d).replace(".", "")}</span>`,
+        state.date === iso(d), () => {
+          state.date = iso(d); $("lDate").classList.remove("err");
+          if (!freeHours().includes(state.time)) state.time = null;
+        }, "day")));
+
+    if (!state.date) { $("times").replaceChildren(el("div", "empty", esc(t("pickDate")))); }
+    else {
+      const hours = freeHours();
+      const groups = [["morning", "ph-sun-horizon", (h) => h < 12], ["day", "ph-sun", (h) => h >= 12 && h < 17], ["evening", "ph-moon", (h) => h >= 17]];
+      const nodes = groups.map(([key, icon, test]) => {
+        const hs = hours.filter((h) => test(parseInt(h)));
+        if (!hs.length) return null;
+        const g = el("div", "times-group", `<h4><i class="ph ${icon}"></i>${t(key)}</h4>`);
+        const grid = el("div", "times");
+        hs.forEach((h) => grid.append(chip(h, state.time === h, () => { state.time = h; $("lTime").classList.remove("err"); })));
+        g.append(grid);
+        return g;
+      }).filter(Boolean);
+      $("times").replaceChildren(...(nodes.length ? nodes : [el("div", "empty", esc(t("noTimes")))]));
+    }
+  }
+
+  if (step === "contact") {
+    $("paySeg").replaceChildren(...C.payments.map((p) => {
+      const b = el("button", state.pay === p ? "on" : "", p);
+      b.onclick = () => { haptic("select"); state.pay = p; renderFlow(false); };
+      return b;
+    }));
+  }
+
+  if (step === "review") {
+    const when = new Intl.DateTimeFormat(locale(), { weekday: "long", day: "numeric", month: "long" }).format(fromIso(state.date));
+    const row = (icon, k, v, go) => `<div class="sum-row"><i class="ph ${icon}"></i><div style="flex:1"><div class="k">${esc(k)}</div>
+      <div class="v">${v}</div></div>${go != null ? `<button class="edit" data-go="${go}">${esc(t("change"))}</button>` : ""}</div>`;
+    $("summary").innerHTML = `<div class="photo photo-top"></div><div class="sum-body">
+      ${row("ph-hand-heart", t("sService"), `${esc(s.name[lang])}, ${state.opt.min} ${t("min")}`, 0)}
+      ${row("ph-calendar-check", t("sWhen"), `${esc(when)}, ${state.time}`, 0)}
+      ${row("ph-user", t("sWho"), esc($("name").value.trim()) + ($("tel").value.trim() ? `<br><span style="color:var(--muted)">${esc($("tel").value.trim())}</span>` : ""), 1)}
+      ${row("ph-wallet", t("sPay"), esc(state.pay), 1)}
+      ${row("ph-map-pin", t("sWhere"), esc(C.address))}
+      </div><div class="total"><span>${esc(t("total"))}</span><b>${state.opt.usd} USD</b></div>`;
+    $("summary").querySelectorAll("[data-go]").forEach((b) => (b.onclick = () => { state.step = +b.dataset.go; renderFlow(true); scrollTo(0, 0); }));
+  }
+
+  // Главная кнопка: в Telegram нативная, в браузере своя
+  const label = step === "review" ? `${t("send")}, ${state.opt.usd} USD` : t("next");
+  if (inTelegram) {
+    tg.BackButton.show();
+    tg.MainButton.setText(label);
+    tg.MainButton.show();
+    $("backBtn").classList.add("hidden");
+  } else {
+    $("dockBtn").innerHTML = `${esc(label)} <i class="ph ${step === "review" ? "ph-paper-plane-tilt" : "ph-arrow-right"}"></i>`;
+    $("dock").classList.remove("hidden");
+  }
+}
+
+// ---------- Отправка ----------
+function submit() {
+  const payload = {
+    v: 1, l: lang, s: state.svc.id, m: state.opt.min, u: state.opt.usd,
+    d: state.date, t: state.time, pay: state.pay,
+    n: $("name").value.trim().slice(0, 80), p: $("tel").value.trim().slice(0, 40), c: $("comment").value.trim().slice(0, 600),
+  };
+  if (!inTelegram) { toast(t("notTg")); console.log("payload", payload); return; }
+  haptic("success");
+  tg.sendData(JSON.stringify(payload)); // Telegram закроет Mini App и передаст заявку боту
+}
+
+function toast(msg) {
+  const n = $("toast");
+  n.textContent = msg; n.classList.remove("hidden");
+  n.style.animation = "none"; void n.offsetWidth; n.style.animation = "";
+  clearTimeout(toast.tm); toast.tm = setTimeout(() => n.classList.add("hidden"), 2800);
+}
+
+function haptic(kind) {
+  const h = tg?.HapticFeedback;
+  if (!inTelegram || !h) return;
+  if (kind === "select") h.selectionChanged();
+  else if (kind === "impact") h.impactOccurred("light");
+  else h.notificationOccurred(kind);
+}
+
+function renderAll() { renderHome(); if (state.screen === "flow") renderFlow(false); }
+
+// ---------- Старт ----------
+const openServices = () => { haptic("impact"); $("services").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" }); };
+$("heroCta").onclick = openServices;
+$("footCta").onclick = openServices;
+$("backBtn").onclick = goBack;
+// Ссылки на Telegram Аллы: внутри Telegram открываем нативно, чтобы Mini App не уходил в браузер
+const openAlla = (e) => {
+  if (!inTelegram) return;
+  e.preventDefault();
+  tg.openTelegramLink(`https://t.me/${C.telegram}`);
+};
+$("tgLink").onclick = openAlla;
+document.querySelectorAll(".tg-alla").forEach((a) => { a.href = `https://t.me/${C.telegram}`; a.target = "_blank"; a.onclick = openAlla; });
+$("dockBtn").onclick = goNext;
+applyTheme();
+renderAll();
+if (inTelegram) {
+  tg.ready();
+  tg.expand();
+  tg.onEvent("themeChanged", applyTheme);
+  tg.BackButton.onClick(goBack);
+  tg.MainButton.onClick(goNext);
+} else {
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applyTheme);
+}
+</script>
+</body>
+</html>
