@@ -11,7 +11,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
 <link rel="preload" as="image" href="hero.webp">
-<script src="config.js"></script>
 <style>
   /* Палитра «чёрный и табак»: тёплый почти-чёрный + один акцент, как свет свечей на фото.
      Радиусы: кнопки и чипы — пилюля, карточки 20px, поля 14px. */
@@ -307,8 +306,9 @@
 <div class="dock hidden" id="dock"><button class="btn btn-primary btn-block" id="dockBtn"></button></div>
 <div class="toast hidden" id="toast" role="status"></div>
 
-<script>
-const C = window.CONFIG;
+<script type="module">
+// Услуги и цены берутся из config.json (тот же файл читает бот)
+const C = await (await fetch("config.json", { cache: "no-cache" })).json();
 const tg = window.Telegram?.WebApp;
 const inTelegram = !!(tg && tg.initData);
 
@@ -332,6 +332,7 @@ const T = {
     sService: "Услуга", sWhen: "Дата и время", sWho: "Имя", sPay: "Оплата", sWhere: "Адрес", total: "Итого", change: "Изменить",
     confirmNote: "Это заявка. Алла подтвердит время в этом чате, обычно в течение пары часов.",
     needWhen: "Выберите длительность, дату и время", needName: "Укажите имя",
+    sendFail: "Не получилось отправить. Проверьте интернет и попробуйте ещё раз.",
     notTg: "Отправка работает внутри Telegram. Откройте приложение через бота.",
   },
   es: {
@@ -353,6 +354,7 @@ const T = {
     sService: "Servicio", sWhen: "Fecha y horario", sWho: "Nombre", sPay: "Pago", sWhere: "Dirección", total: "Total", change: "Cambiar",
     confirmNote: "Es una solicitud. Alla te confirma el horario por este chat, normalmente en un par de horas.",
     needWhen: "Elegí duración, fecha y horario", needName: "Escribí tu nombre",
+    sendFail: "No se pudo enviar. Revisá la conexión y probá de nuevo.",
     notTg: "El envío funciona dentro de Telegram. Abrí la app desde el bot.",
   },
   en: {
@@ -374,6 +376,7 @@ const T = {
     sService: "Service", sWhen: "Date and time", sWho: "Name", sPay: "Payment", sWhere: "Address", total: "Total", change: "Change",
     confirmNote: "This is a request. Alla will confirm the time in this chat, usually within a couple of hours.",
     needWhen: "Choose duration, date and time", needName: "Please enter your name",
+    sendFail: "Couldn't send. Check your connection and try again.",
     notTg: "Sending works inside Telegram. Open the app from the bot.",
   },
 };
@@ -611,15 +614,38 @@ function renderFlow(animate) {
 }
 
 // ---------- Отправка ----------
-function submit() {
+async function submit() {
   const payload = {
     v: 1, l: lang, s: state.svc.id, m: state.opt.min, u: state.opt.usd,
     d: state.date, t: state.time, pay: state.pay,
     n: $("name").value.trim().slice(0, 80), p: $("tel").value.trim().slice(0, 40), c: $("comment").value.trim().slice(0, 600),
   };
   if (!inTelegram) { toast(t("notTg")); console.log("payload", payload); return; }
-  haptic("success");
-  tg.sendData(JSON.stringify(payload)); // Telegram закроет Mini App и передаст заявку боту
+  // Без сервера: заявка уходит через Telegram (работает только с нижней кнопки чата)
+  if (!C.api) {
+    haptic("success");
+    return tg.sendData(JSON.stringify(payload)); // Telegram закроет Mini App и передаст заявку боту
+  }
+  // С сервером: работает из любой кнопки (меню, профиль бота, нижняя кнопка). Сервер проверяет подпись Telegram
+  if (submit.busy) return;
+  submit.busy = true;
+  tg.MainButton.showProgress();
+  try {
+    const r = await fetch(C.api, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ initData: tg.initData, booking: payload }),
+    });
+    if (!r.ok) throw new Error(r.status);
+    haptic("success");
+    tg.close(); // подтверждение уже пришло в чат с ботом
+  } catch (e) {
+    try { tg.sendData(JSON.stringify(payload)); } catch {} // запасной путь для нижней кнопки
+    haptic("error");
+    toast(t("sendFail"));
+  } finally {
+    submit.busy = false;
+    tg.MainButton.hideProgress();
+  }
 }
 
 function toast(msg) {
