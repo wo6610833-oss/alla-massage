@@ -167,5 +167,5 @@
     }
   ],
   "_help": "Настройки: услуги, цены, график. workDays: 0=воскресенье...6=суббота",
-  "api": ""
+  "api": "https://alla-massage-bot.wo6610833.workers.dev/api/book"
 }
