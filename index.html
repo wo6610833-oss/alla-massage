@@ -7,23 +7,23 @@
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- Заголовки: Cormorant Garamond, как на флаере «Masajes Buenos Aires». Текст: Onest (есть кириллица) -->
+<!-- Заголовки: Cormorant Garamond, как на флаере студии. Текст: Onest (есть кириллица) -->
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
-<link rel="preload" as="image" href="hero.webp">
+<link rel="preload" as="image" href="img/alla-hero-sm.jpg">
 <style>
   /* Палитра «чёрный и табак»: тёплый почти-чёрный + один акцент, как свет свечей на фото.
-     Радиусы: кнопки и чипы — пилюля, карточки 20px, поля 14px. */
+     Радиусы: кнопки и чипы - пилюля, карточки 20px, поля 14px. */
   :root {
     --bg: #f3f1ee; --surface: #fbfaf8; --surface-2: #ebe7e2; --line: rgba(30, 24, 20, .12);
     --text: #171412; --muted: #675f57; --accent: #7f5536; --accent-ink: #fbfaf8;
-    --accent-soft: rgba(127, 85, 54, .12); --danger: #b03a2e;
+    --accent-soft: rgba(127, 85, 54, .12); --danger: #b03a2e; --ok: #2f7a4a; --warn: #a3621f;
     --shadow: 0 10px 30px rgba(60, 40, 25, .10);
   }
   :root[data-theme="dark"] {
     --bg: #121110; --surface: #1c1a18; --surface-2: #262320; --line: rgba(239, 233, 225, .10);
     --text: #efe9e1; --muted: #a59b90; --accent: #cfa87f; --accent-ink: #171412;
-    --accent-soft: rgba(207, 168, 127, .14); --danger: #e8816f;
+    --accent-soft: rgba(207, 168, 127, .14); --danger: #e8816f; --ok: #7cc393; --warn: #e2a25e;
     --shadow: 0 10px 30px rgba(0, 0, 0, .35);
   }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -31,73 +31,77 @@
   body { font: 15px/1.5 Onest, system-ui, sans-serif; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
   body.flow { padding-bottom: 110px; }
   button { font: inherit; color: inherit; border: 0; background: none; cursor: pointer; padding: 0; }
+  button:disabled { cursor: default; }
   a { color: inherit; text-decoration: none; }
   i.ph { font-size: 20px; line-height: 1; }
   .hidden { display: none !important; }
   .display { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; letter-spacing: -.01em; line-height: 1.05; }
-
-  /* Фрагменты коллажа hero.webp (1254×1254): верхняя панель, нижняя левая, нижняя правая */
-  .photo { background: #2a221c url(hero.webp) no-repeat; }
-  .photo-top { background-size: auto 205%; background-position: 72% 0; }
-  .photo-bl { background-size: 201.6% auto; background-position: 0 100%; }
-  .photo-br { background-size: 201.6% auto; background-position: 100% 100%; }
+  img { display: block; max-width: 100%; }
+  .cover { width: 100%; height: 100%; object-fit: cover; }
 
   /* ---------- Главная ---------- */
-  .hero { position: relative; min-height: 78dvh; display: flex; flex-direction: column; justify-content: flex-end; }
-  .hero .photo { position: absolute; inset: 0; }
+  .hero { position: relative; min-height: 80dvh; display: flex; flex-direction: column; justify-content: flex-end; background: #1b1511; }
+  .hero img { position: absolute; inset: 0; object-position: 50% 30%; }
   .hero::after { content: ""; position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(18,17,16,.10) 0%, rgba(18,17,16,.05) 35%, rgba(18,17,16,.70) 72%, var(--bg) 100%); }
+    background: linear-gradient(180deg, rgba(18,17,16,.25) 0%, rgba(18,17,16,0) 30%, rgba(18,17,16,.72) 72%, var(--bg) 100%); }
   .hero-body { position: relative; z-index: 1; padding: 0 20px 26px; color: #f5efe7; }
   :root:not([data-theme="dark"]) .hero-body { color: var(--text); }
   :root:not([data-theme="dark"]) .hero::after {
-    background: linear-gradient(180deg, rgba(18,17,16,.05) 0%, rgba(18,17,16,.0) 40%, rgba(243,241,238,.75) 76%, var(--bg) 100%); }
+    background: linear-gradient(180deg, rgba(18,17,16,.25) 0%, rgba(18,17,16,0) 30%, rgba(243,241,238,.8) 78%, var(--bg) 100%); }
   .hero h1 { font-size: 52px; margin: 0 0 8px; }
-  .hero p { margin: 0 0 20px; max-width: 30ch; font-size: 16px; opacity: .9; }
-  .langs { position: absolute; top: 14px; right: 14px; z-index: 2; display: flex; padding: 3px; border-radius: 999px;
-    background: rgba(18,17,16,.45); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,.14); }
-  .langs button { color: #f5efe7; font-size: 12px; font-weight: 600; padding: 6px 11px; border-radius: 999px; letter-spacing: .04em; }
-  .langs button.on { background: #f5efe7; color: #171412; }
+  .hero p { margin: 0 0 20px; max-width: 30ch; font-size: 16px; opacity: .92; }
+  .topbar { position: absolute; top: 14px; left: 14px; right: 14px; z-index: 2; display: flex; justify-content: space-between; gap: 8px; }
+  .glass { display: flex; padding: 3px; border-radius: 999px; background: rgba(18,17,16,.45);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,.14); }
+  .glass button { color: #f5efe7; font-size: 12px; font-weight: 600; padding: 6px 11px; border-radius: 999px; letter-spacing: .04em;
+    display: inline-flex; align-items: center; gap: 6px; }
+  .glass button i { font-size: 15px; }
+  .glass button.on { background: #f5efe7; color: #171412; }
 
   .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 999px;
     padding: 15px 22px; font-weight: 600; font-size: 16px; white-space: nowrap; transition: transform .15s ease, opacity .15s; }
   .btn:active { transform: scale(.98); }
   .btn-primary { background: var(--accent); color: var(--accent-ink); }
   .btn-ghost { background: var(--surface-2); color: var(--text); }
+  .btn-sm { padding: 9px 14px; font-size: 14px; }
   .btn-block { width: 100%; }
+  .btn-danger { background: transparent; color: var(--danger); border: 1px solid var(--line); }
 
   section.block { padding: 36px 20px 0; }
   .h2 { font-size: 34px; margin: 0 0 16px; }
 
   .about { display: grid; grid-template-columns: 112px 1fr; gap: 16px; align-items: center; }
-  .about .photo { aspect-ratio: 1; border-radius: 20px; }
+  .about img { aspect-ratio: 1; border-radius: 20px; object-fit: cover; width: 100%; }
   .about p { margin: 0; color: var(--muted); }
   .creds { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
   .cred { display: inline-flex; align-items: center; gap: 6px; background: var(--surface); border: 1px solid var(--line);
     border-radius: 999px; padding: 7px 12px; font-size: 13px; }
   .cred i { color: var(--accent); font-size: 16px; }
 
-  .svc { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 18px; margin-bottom: 12px; }
-  .svc-top { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
-  .svc-name { font-weight: 600; font-size: 16.5px; line-height: 1.3; }
-  .svc-from { color: var(--accent); font-weight: 600; white-space: nowrap; font-size: 14px; }
-  .svc-desc { color: var(--muted); font-size: 13.5px; margin: 4px 0 14px; }
-  .opts { display: flex; flex-wrap: wrap; gap: 8px; }
-  .opt { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 999px;
-    padding: 8px 8px 8px 14px; font-size: 14px; background: var(--bg); transition: transform .15s, border-color .15s; }
+  .svc { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; margin-bottom: 12px; overflow: hidden;
+    display: grid; grid-template-columns: 96px 1fr; }
+  .svc img { width: 96px; height: 100%; min-height: 128px; object-fit: cover; }
+  .svc-body { padding: 14px 14px 14px 16px; min-width: 0; }
+  .svc-name { font-weight: 600; font-size: 16px; line-height: 1.3; }
+  .svc-desc { color: var(--muted); font-size: 13px; margin: 3px 0 12px; }
+  .opts { display: flex; flex-wrap: wrap; gap: 6px; }
+  .opt { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); border-radius: 999px;
+    padding: 6px 6px 6px 12px; font-size: 13.5px; background: var(--bg); transition: transform .15s, border-color .15s; }
   .opt b { font-weight: 600; }
-  .opt .go { width: 26px; height: 26px; border-radius: 999px; background: var(--accent); color: var(--accent-ink);
-    display: grid; place-items: center; }
-  .opt .go i { font-size: 14px; }
+  .opt .go { width: 24px; height: 24px; border-radius: 999px; background: var(--accent); color: var(--accent-ink); display: grid; place-items: center; }
+  .opt .go i { font-size: 13px; }
   .opt:active { transform: scale(.97); border-color: var(--accent); }
 
-  .studio { border-radius: 20px; overflow: hidden; background: var(--surface); border: 1px solid var(--line); }
-  .studio .photo { aspect-ratio: 16 / 9; }
-  .studio-body { padding: 6px 18px; }
+  .gallery { display: flex; gap: 10px; overflow-x: auto; margin: 0 -20px; padding: 0 20px 4px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .gallery::-webkit-scrollbar { display: none; }
+  .gallery figure { margin: 0; flex: none; width: 62%; scroll-snap-align: start; }
+  .gallery img { aspect-ratio: 3 / 4; border-radius: 20px; object-fit: cover; width: 100%; background: var(--surface-2); }
+  .gallery figcaption { font-size: 13px; color: var(--muted); margin-top: 6px; }
+
+  .info { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 6px 18px; margin-top: 16px; }
   .row { display: flex; align-items: center; gap: 14px; padding: 14px 0; }
   .row + .row { border-top: 1px solid var(--line); }
-  .row .ic { width: 38px; height: 38px; border-radius: 12px; background: var(--accent-soft); color: var(--accent);
-    display: grid; place-items: center; flex: none; }
+  .row .ic { width: 38px; height: 38px; border-radius: 12px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; flex: none; }
   .row .tx { flex: 1; min-width: 0; }
   .row small { display: block; color: var(--muted); font-size: 12.5px; }
   .row .arrow { color: var(--muted); }
@@ -106,8 +110,8 @@
   /* ---------- Запись ---------- */
   .flow-top { position: sticky; top: 0; z-index: 5; background: var(--bg); padding: 12px 20px 10px; }
   .flow-nav { display: flex; align-items: center; gap: 10px; min-height: 36px; }
-  .back { width: 36px; height: 36px; border-radius: 999px; background: var(--surface-2); display: grid; place-items: center; }
-  .progress { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; flex: 1; }
+  .back { width: 36px; height: 36px; border-radius: 999px; background: var(--surface-2); display: grid; place-items: center; flex: none; }
+  .progress { display: grid; gap: 6px; flex: 1; }
   .progress span { height: 4px; border-radius: 999px; background: var(--surface-2); overflow: hidden; position: relative; }
   .progress span::after { content: ""; position: absolute; inset: 0; background: var(--accent); transform: scaleX(0);
     transform-origin: left; transition: transform .35s cubic-bezier(.16,1,.3,1); }
@@ -115,14 +119,21 @@
   .flow-title { font-size: 32px; margin: 14px 0 0; }
 
   .step { padding: 4px 20px 0; }
-  .step.enter { animation: stepIn .38s cubic-bezier(.16,1,.3,1); }
+  .enter { animation: stepIn .38s cubic-bezier(.16,1,.3,1); }
   @keyframes stepIn { from { opacity: 0; transform: translateX(18px); } to { opacity: 1; transform: none; } }
 
-  .picked { display: flex; gap: 12px; align-items: center; background: var(--surface); border: 1px solid var(--line);
-    border-radius: 20px; padding: 12px; margin-top: 8px; }
-  .picked .photo { width: 52px; height: 52px; border-radius: 14px; flex: none; }
+  .picked { display: flex; gap: 12px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 10px; margin-top: 8px; }
+  .picked img { width: 52px; height: 52px; border-radius: 14px; object-fit: cover; flex: none; }
   .picked b { display: block; font-weight: 600; line-height: 1.25; }
   .picked small { color: var(--muted); }
+
+  .spec-card { width: 100%; display: flex; gap: 14px; align-items: center; text-align: left; background: var(--surface);
+    border: 1px solid var(--line); border-radius: 20px; padding: 12px; margin-top: 10px; transition: border-color .15s, transform .15s; }
+  .spec-card:active { transform: scale(.99); }
+  .spec-card.on { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  .spec-card img { width: 64px; height: 64px; border-radius: 16px; object-fit: cover; flex: none; }
+  .spec-card b { display: block; font-size: 16px; }
+  .spec-card small { color: var(--muted); }
 
   .label { font-size: 13px; font-weight: 600; color: var(--muted); margin: 24px 0 10px; display: flex; align-items: center; gap: 6px; }
   .label.err { color: var(--danger); }
@@ -131,35 +142,35 @@
   .chips.scroll::-webkit-scrollbar { display: none; }
   .chip { background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 10px 16px;
     white-space: nowrap; font-weight: 500; transition: background .15s, color .15s, border-color .15s, transform .15s; }
-  .chip:active { transform: scale(.96); }
+  .chip:active:not(:disabled) { transform: scale(.96); }
   .chip.on { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .chip:disabled { opacity: .38; }
   .chip small { opacity: .7; margin-left: 6px; font-weight: 500; }
-  .day { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 62px; padding: 10px 8px 12px;
-    border-radius: 20px; scroll-snap-align: start; }
+  .day { display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 62px; padding: 10px 8px 12px; border-radius: 20px; scroll-snap-align: start; }
   .day span { font-size: 12px; opacity: .75; text-transform: capitalize; }
   .day b { font-size: 22px; font-weight: 600; line-height: 1.1; }
-  .times-group + .times-group { margin-top: 14px; }
-  .times-group h4 { margin: 0 0 8px; font-size: 12.5px; font-weight: 500; color: var(--muted); display: flex; align-items: center; gap: 6px; }
-  .times { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
-  .times .chip { padding: 10px 0; text-align: center; }
+  .times { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .times .chip { padding: 12px 0; text-align: center; }
   .empty { color: var(--muted); font-size: 14px; background: var(--surface); border: 1px dashed var(--line); border-radius: 20px; padding: 16px; }
+  .skel { height: 46px; border-radius: 999px; background: linear-gradient(90deg, var(--surface-2), var(--surface), var(--surface-2)); background-size: 200% 100%; animation: shimmer 1.2s infinite linear; }
+  @keyframes shimmer { to { background-position: -200% 0; } }
 
   .field { display: grid; gap: 6px; margin-top: 14px; }
   .field label { font-size: 13px; font-weight: 600; color: var(--muted); }
   .field label.err { color: var(--danger); }
   .field .hint { font-size: 12px; color: var(--muted); }
-  input, textarea { width: 100%; font: inherit; font-size: 16px; color: var(--text); background: var(--surface);
-    border: 1px solid var(--line); border-radius: 14px; padding: 13px 14px; outline: none; transition: border-color .15s, box-shadow .15s; }
+  input, textarea, select { width: 100%; font: inherit; font-size: 16px; color: var(--text); background: var(--surface);
+    border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; outline: none; transition: border-color .15s, box-shadow .15s; }
   input::placeholder, textarea::placeholder { color: var(--muted); opacity: .8; }
-  input:focus, textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
-  textarea { min-height: 88px; resize: vertical; }
-  .seg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; background: var(--surface-2); padding: 4px; border-radius: 999px; }
-  .seg button { padding: 10px 0; border-radius: 999px; font-weight: 600; font-size: 14px; color: var(--muted); }
+  input:focus, textarea:focus, select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+  textarea { min-height: 84px; resize: vertical; }
+  .seg { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 4px; background: var(--surface-2); padding: 4px; border-radius: 999px; }
+  .seg button { padding: 10px 6px; border-radius: 999px; font-weight: 600; font-size: 14px; color: var(--muted); }
   .seg button.on { background: var(--surface); color: var(--text); box-shadow: var(--shadow); }
 
   .summary { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; margin-top: 8px; }
-  .summary .photo { height: 120px; background-size: 205% auto; background-position: 72% 18%; }
-  .summary .sum-body { padding: 4px 18px; }
+  .summary > img { height: 130px; width: 100%; object-fit: cover; object-position: 50% 30%; }
+  .sum-body { padding: 4px 18px; }
   .sum-row { display: flex; gap: 12px; padding: 13px 0; align-items: flex-start; }
   .sum-row + .sum-row { border-top: 1px solid var(--line); }
   .sum-row i { color: var(--accent); margin-top: 1px; }
@@ -173,18 +184,68 @@
 
   .dock { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; padding: 12px 20px calc(14px + env(safe-area-inset-bottom));
     background: linear-gradient(180deg, transparent, var(--bg) 30%); }
-  .toast { position: fixed; left: 20px; right: 20px; bottom: 96px; z-index: 7; background: var(--text); color: var(--bg);
-    padding: 12px 16px; border-radius: 14px; font-size: 14px; text-align: center; box-shadow: var(--shadow);
-    animation: stepIn .25s ease; }
+  .toast { position: fixed; left: 20px; right: 20px; bottom: 96px; z-index: 30; background: var(--text); color: var(--bg);
+    padding: 12px 16px; border-radius: 14px; font-size: 14px; text-align: center; box-shadow: var(--shadow); animation: stepIn .25s ease; }
+
+  /* ---------- Кабинет ---------- */
+  .adm-head { position: sticky; top: 0; z-index: 5; background: var(--bg); padding: 12px 20px 0; }
+  .adm-tabs { display: flex; gap: 6px; overflow-x: auto; margin: 12px -20px 0; padding: 0 20px 10px; scrollbar-width: none; }
+  .adm-tabs::-webkit-scrollbar { display: none; }
+  .adm-tabs button { white-space: nowrap; padding: 8px 14px; border-radius: 999px; background: var(--surface-2); font-size: 14px; font-weight: 600; color: var(--muted); }
+  .adm-tabs button.on { background: var(--accent); color: var(--accent-ink); }
+  .adm { padding: 8px 20px 40px; }
+  .day-h { font-size: 13px; font-weight: 600; color: var(--muted); margin: 20px 0 8px; text-transform: capitalize; }
+  .bk { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 14px; margin-bottom: 10px; }
+  .bk-top { display: flex; gap: 12px; align-items: baseline; }
+  .bk-time { font-size: 22px; font-weight: 600; font-family: "Cormorant Garamond", Georgia, serif; min-width: 56px; }
+  .bk-main { flex: 1; min-width: 0; }
+  .bk-main b { display: block; }
+  .bk-main small { color: var(--muted); display: block; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .tag { font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: var(--surface-2); display: inline-flex; align-items: center; gap: 4px; }
+  .tag i { font-size: 13px; }
+  .tag.ok { color: var(--ok); } .tag.new { color: var(--accent); } .tag.warn { color: var(--warn); } .tag.off { color: var(--danger); }
+  .bk-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .grid2 .field { margin-top: 14px; }
+  .check { display: flex; gap: 10px; align-items: center; margin-top: 14px; font-size: 14px; }
+  .check input { width: 20px; height: 20px; accent-color: var(--accent); }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 16px; margin-top: 12px; }
+  .card h3 { margin: 0 0 4px; font-size: 16px; }
+  .card p { margin: 0; color: var(--muted); font-size: 14px; }
+  .cl { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); }
+  .cl:first-child { border-top: 0; }
+  .cl .tx { flex: 1; min-width: 0; }
+  .cl small { color: var(--muted); display: block; }
+  .stepper { display: flex; align-items: center; gap: 6px; }
+  .stepper button { width: 32px; height: 32px; border-radius: 999px; background: var(--surface-2); display: grid; place-items: center; }
+  .stepper b { min-width: 22px; text-align: center; }
+  .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 12px; }
+  .tile { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 14px; }
+  .tile small { color: var(--muted); font-size: 12.5px; display: block; }
+  .tile b { font-size: 30px; font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; line-height: 1.1; }
+  .chart { position: relative; margin-top: 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 14px 14px 8px; }
+  .chart h3 { margin: 0 0 10px; font-size: 14px; }
+  .bars { display: flex; align-items: flex-end; gap: 2px; height: 120px; border-bottom: 1px solid var(--line); }
+  .bars button { flex: 1; height: 100%; display: flex; align-items: flex-end; }
+  .bars button span { display: block; width: 100%; background: var(--accent); border-radius: 4px 4px 0 0; min-height: 2px; opacity: .85; }
+  .bars button:hover span, .bars button.on span { opacity: 1; }
+  .axis { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .tip { font-size: 13px; color: var(--muted); margin-top: 8px; min-height: 20px; }
+  .tip b { color: var(--text); }
+  .copy { display: flex; gap: 8px; margin-top: 10px; }
+  .copy input { font-size: 13px; }
+  ol.steps { margin: 8px 0 0; padding-left: 20px; color: var(--muted); font-size: 14px; }
+  ol.steps li { margin: 4px 0; }
 
   .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1); }
   .reveal.in { opacity: 1; transform: none; }
   @media (prefers-reduced-motion: reduce) {
     .reveal { opacity: 1; transform: none; transition: none; }
-    .step.enter, .toast { animation: none; }
+    .enter, .toast, .skel { animation: none; }
     * { transition: none !important; }
   }
-  @media (min-width: 640px) { #app { max-width: 560px; margin: 0 auto; } .dock { max-width: 560px; margin: 0 auto; } }
+  @media (min-width: 640px) { #app { max-width: 560px; margin: 0 auto; } .dock { max-width: 560px; margin: 0 auto; } .gallery figure { width: 44%; } }
 </style>
 </head>
 <body>
@@ -193,8 +254,12 @@
 <!-- ================= Главная ================= -->
 <main id="home">
   <header class="hero">
-    <div class="photo photo-top" role="img" aria-label="Alla"></div>
-    <div class="langs" id="langs"></div>
+    <img class="cover" src="img/alla-hero-sm.jpg" srcset="img/alla-hero-sm.jpg 640w, img/alla-hero.jpg 1400w" sizes="100vw" alt="Alla">
+    <div class="topbar">
+      <div class="glass hidden" id="adminPill"><button id="adminBtn"><i class="ph ph-squares-four"></i>Кабинет</button></div>
+      <span></span>
+      <div class="glass" id="langs"></div>
+    </div>
     <div class="hero-body">
       <h1 class="display">Dr Alla</h1>
       <p data-t="heroSub"></p>
@@ -204,7 +269,7 @@
 
   <section class="block reveal">
     <div class="about">
-      <div class="photo photo-bl" role="img" aria-label=""></div>
+      <img src="img/hands-neck-sm.jpg" alt="" loading="lazy">
       <p data-t="about"></p>
     </div>
     <div class="creds" id="creds"></div>
@@ -217,28 +282,26 @@
 
   <section class="block reveal">
     <h2 class="h2 display" data-t="studio"></h2>
-    <div class="studio">
-      <div class="photo photo-br" role="img" aria-label=""></div>
-      <div class="studio-body">
-        <a class="row" id="mapLink" target="_blank" rel="noopener">
-          <span class="ic"><i class="ph ph-map-pin"></i></span>
-          <span class="tx"><span id="addr"></span><small data-t="openMap"></small></span>
-          <i class="ph ph-arrow-up-right arrow"></i>
-        </a>
-        <a class="row" id="tgLink" target="_blank" rel="noopener">
-          <span class="ic"><i class="ph ph-telegram-logo"></i></span>
-          <span class="tx"><span data-t="writeAlla"></span><small id="tgUser"></small></span>
-          <i class="ph ph-arrow-up-right arrow"></i>
-        </a>
-        <a class="row" id="waLink" target="_blank" rel="noopener">
-          <span class="ic"><i class="ph ph-whatsapp-logo"></i></span>
-          <span class="tx"><span id="phone"></span><small>WhatsApp</small></span>
-          <i class="ph ph-arrow-up-right arrow"></i>
-        </a>
-        <div class="row">
-          <span class="ic"><i class="ph ph-wallet"></i></span>
-          <span class="tx"><span id="pays"></span><small data-t="payment"></small></span>
-        </div>
+    <div class="gallery" id="gallery"></div>
+    <div class="info">
+      <a class="row" id="mapLink" target="_blank" rel="noopener">
+        <span class="ic"><i class="ph ph-map-pin"></i></span>
+        <span class="tx"><span id="addr"></span><small data-t="openMap"></small></span>
+        <i class="ph ph-arrow-up-right arrow"></i>
+      </a>
+      <a class="row" id="tgLink" target="_blank" rel="noopener">
+        <span class="ic"><i class="ph ph-telegram-logo"></i></span>
+        <span class="tx"><span data-t="writeAlla"></span><small id="tgUser"></small></span>
+        <i class="ph ph-arrow-up-right arrow"></i>
+      </a>
+      <a class="row" id="waLink" target="_blank" rel="noopener">
+        <span class="ic"><i class="ph ph-whatsapp-logo"></i></span>
+        <span class="tx"><span id="phone"></span><small>WhatsApp</small></span>
+        <i class="ph ph-arrow-up-right arrow"></i>
+      </a>
+      <div class="row">
+        <span class="ic"><i class="ph ph-wallet"></i></span>
+        <span class="tx"><span id="pays"></span><small data-t="payment"></small></span>
       </div>
     </div>
   </section>
@@ -253,13 +316,14 @@
   <div class="flow-top">
     <div class="flow-nav">
       <button class="back" id="backBtn" aria-label="Back"><i class="ph ph-arrow-left"></i></button>
-      <div class="progress" id="progress"><span></span><span></span><span></span></div>
+      <div class="progress" id="progress"></div>
     </div>
     <h2 class="flow-title display" id="flowTitle"></h2>
   </div>
 
-  <!-- Шаг: когда -->
-  <div class="step" id="stepWhen">
+  <div class="step" id="stepSpec"><div id="specList"></div></div>
+
+  <div class="step hidden" id="stepWhen">
     <div class="picked" id="pickedCard"></div>
     <div id="durBlock">
       <div class="label" id="lDur"><i class="ph ph-hourglass-medium"></i><span data-t="duration"></span></div>
@@ -271,7 +335,6 @@
     <div id="times"></div>
   </div>
 
-  <!-- Шаг: контакты -->
   <div class="step hidden" id="stepContact">
     <div class="field">
       <label for="name" id="lName" data-t="nameL"></label>
@@ -293,12 +356,26 @@
     </div>
   </div>
 
-  <!-- Шаг: проверка -->
   <div class="step hidden" id="stepReview">
     <div class="summary" id="summary"></div>
     <p class="note"><i class="ph ph-chat-circle-text"></i><span data-t="confirmNote"></span></p>
+    <p class="note hidden" id="prepayNote"><i class="ph ph-credit-card"></i><span></span></p>
     <p class="note"><i class="ph ph-telegram-logo"></i><a class="edit tg-alla" data-t="askAlla"></a></p>
   </div>
+</main>
+
+<!-- ================= Кабинет администратора ================= -->
+<main id="admin" class="hidden">
+  <div class="adm-head">
+    <div class="flow-nav">
+      <button class="back" id="admBack" aria-label="Back"><i class="ph ph-arrow-left"></i></button>
+      <h2 class="display" style="margin:0;font-size:28px">Кабинет</h2>
+      <span style="flex:1"></span>
+      <button class="back" id="admReload" aria-label="Обновить"><i class="ph ph-arrow-clockwise"></i></button>
+    </div>
+    <div class="adm-tabs" id="admTabs"></div>
+  </div>
+  <div class="adm" id="admBody"></div>
 </main>
 
 </div>
@@ -307,10 +384,11 @@
 <div class="toast hidden" id="toast" role="status"></div>
 
 <script type="module">
-// Услуги и цены берутся из config.json (тот же файл читает бот)
+// Услуги, специалисты и график берутся из config.json (тот же файл читает бот)
 const C = await (await fetch("config.json", { cache: "no-cache" })).json();
 const tg = window.Telegram?.WebApp;
 const inTelegram = !!(tg && tg.initData);
+const API = (C.api || "").replace(/\/api\/book$/, "");
 
 const T = {
   ru: {
@@ -318,20 +396,24 @@ const T = {
     book: "Записаться",
     about: "Я врач ЛФК, мануальный терапевт, массажист и специалист по физической реабилитации. Подбираю технику под ваш запрос и состояние.",
     creds: ["Врач ЛФК", "Мануальный терапевт", "Массажист", "Реабилитолог"],
-    writeAlla: "Написать Алле в Telegram", askAlla: "Остались вопросы? Напишите Алле", services: "Услуги", studio: "Студия", openMap: "Открыть на карте", payment: "Способы оплаты",
+    services: "Услуги", studio: "Студия", openMap: "Открыть на карте", payment: "Способы оплаты",
+    writeAlla: "Написать Алле в Telegram", askAlla: "Остались вопросы? Напишите Алле",
+    gallery: ["Кабинет массажа", "Опора для массажа беременных", "Зона реабилитации", "Зона ожидания", "Детали студии", "Вход"],
     min: "мин", from: "от",
-    stepWhen: "Когда удобно?", stepContact: "Ваши контакты", stepReview: "Проверьте заявку",
-    duration: "Длительность", date: "Дата", time: "Время",
-    pickDate: "Сначала выберите дату, и появится свободное время.", morning: "Утро", day: "День", evening: "Вечер", noTimes: "На этот день свободного времени уже нет. Выберите другую дату.",
+    stepSpec: "К кому записаться?", stepWhen: "Когда удобно?", stepContact: "Ваши контакты", stepReview: "Проверьте заявку",
+    duration: "Длительность", date: "Дата", time: "Свободное время",
+    pickDate: "Выберите дату, и появится свободное время.", noSlots: "На ближайшие недели свободного времени нет. Напишите Алле, она подберёт окно.",
+    loadFail: "Не получилось загрузить свободное время.", retry: "Повторить",
     nameL: "Имя", namePh: "Как к вам обращаться",
-    telL: "Телефон или WhatsApp", telPh: "+54 9 11 ...", telHint: "Необязательно. Алла ответит в Telegram.",
-    commentL: "Пожелания", commentPh: "Что беспокоит, противопоказания, беременность",
-    commentHint: "Необязательно, но поможет подготовиться к сеансу.",
+    telL: "Телефон или WhatsApp", telPh: "+54 9 11 ...", telHint: "Необязательно. Ответим в Telegram.",
+    commentL: "Пожелания", commentPh: "Что беспокоит, противопоказания, беременность", commentHint: "Необязательно, но поможет подготовиться к сеансу.",
     payHow: "Как удобнее оплатить",
     next: "Далее", send: "Отправить заявку",
-    sService: "Услуга", sWhen: "Дата и время", sWho: "Имя", sPay: "Оплата", sWhere: "Адрес", total: "Итого", change: "Изменить",
-    confirmNote: "Это заявка. Алла подтвердит время в этом чате, обычно в течение пары часов.",
-    needWhen: "Выберите длительность, дату и время", needName: "Укажите имя",
+    sService: "Услуга", sSpec: "Специалист", sWhen: "Дата и время", sWho: "Имя", sPay: "Оплата", sWhere: "Адрес", total: "Итого", change: "Изменить",
+    confirmNote: "Это заявка. Время подтвердят в этом чате, обычно в течение пары часов.",
+    prepayNote: (u) => `Для новых клиентов предоплата ${u} USD. Реквизиты придут в чат после заявки.`,
+    needSpec: "Выберите специалиста", needWhen: "Выберите длительность, дату и время", needName: "Укажите имя",
+    busy: "Это время только что заняли. Выберите другое.",
     sendFail: "Не получилось отправить. Проверьте интернет и попробуйте ещё раз.",
     notTg: "Отправка работает внутри Telegram. Откройте приложение через бота.",
   },
@@ -340,20 +422,24 @@ const T = {
     book: "Reservar",
     about: "Soy médica en kinesiología, terapeuta manual, masajista y especialista en rehabilitación física. Elijo la técnica según tu necesidad y tu estado.",
     creds: ["Médica en kinesiología", "Terapeuta manual", "Masajista", "Rehabilitación"],
-    writeAlla: "Escribile a Alla por Telegram", askAlla: "¿Tenés dudas? Escribile a Alla", services: "Servicios", studio: "Estudio", openMap: "Ver en el mapa", payment: "Formas de pago",
+    services: "Servicios", studio: "Estudio", openMap: "Ver en el mapa", payment: "Formas de pago",
+    writeAlla: "Escribile a Alla por Telegram", askAlla: "¿Tenés dudas? Escribile a Alla",
+    gallery: ["Sala de masajes", "Soporte para masaje prenatal", "Zona de rehabilitación", "Sala de espera", "Detalles del estudio", "Entrada"],
     min: "min", from: "desde",
-    stepWhen: "¿Cuándo te queda bien?", stepContact: "Tus datos", stepReview: "Revisá tu reserva",
-    duration: "Duración", date: "Fecha", time: "Horario",
-    pickDate: "Primero elegí una fecha y vas a ver los horarios libres.", morning: "Mañana", day: "Tarde", evening: "Noche", noTimes: "Ya no quedan horarios para este día. Elegí otra fecha.",
+    stepSpec: "¿Con quién reservás?", stepWhen: "¿Cuándo te queda bien?", stepContact: "Tus datos", stepReview: "Revisá tu reserva",
+    duration: "Duración", date: "Fecha", time: "Horarios libres",
+    pickDate: "Elegí una fecha y vas a ver los horarios libres.", noSlots: "No hay horarios libres en las próximas semanas. Escribile a Alla y te busca un lugar.",
+    loadFail: "No se pudieron cargar los horarios.", retry: "Reintentar",
     nameL: "Nombre", namePh: "¿Cómo te llamás?",
-    telL: "Teléfono o WhatsApp", telPh: "+54 9 11 ...", telHint: "Opcional. Alla te responde por Telegram.",
-    commentL: "Comentarios", commentPh: "Molestias, contraindicaciones, embarazo",
-    commentHint: "Opcional, pero ayuda a preparar la sesión.",
+    telL: "Teléfono o WhatsApp", telPh: "+54 9 11 ...", telHint: "Opcional. Te respondemos por Telegram.",
+    commentL: "Comentarios", commentPh: "Molestias, contraindicaciones, embarazo", commentHint: "Opcional, pero ayuda a preparar la sesión.",
     payHow: "¿Cómo preferís pagar?",
     next: "Siguiente", send: "Enviar solicitud",
-    sService: "Servicio", sWhen: "Fecha y horario", sWho: "Nombre", sPay: "Pago", sWhere: "Dirección", total: "Total", change: "Cambiar",
-    confirmNote: "Es una solicitud. Alla te confirma el horario por este chat, normalmente en un par de horas.",
-    needWhen: "Elegí duración, fecha y horario", needName: "Escribí tu nombre",
+    sService: "Servicio", sSpec: "Especialista", sWhen: "Fecha y horario", sWho: "Nombre", sPay: "Pago", sWhere: "Dirección", total: "Total", change: "Cambiar",
+    confirmNote: "Es una solicitud. Te confirmamos el horario por este chat, normalmente en un par de horas.",
+    prepayNote: (u) => `Para clientes nuevos hay una seña de ${u} USD. Los datos para pagar llegan al chat.`,
+    needSpec: "Elegí una especialista", needWhen: "Elegí duración, fecha y horario", needName: "Escribí tu nombre",
+    busy: "Ese horario se acaba de ocupar. Elegí otro.",
     sendFail: "No se pudo enviar. Revisá la conexión y probá de nuevo.",
     notTg: "El envío funciona dentro de Telegram. Abrí la app desde el bot.",
   },
@@ -362,37 +448,51 @@ const T = {
     book: "Book now",
     about: "I'm a physician in exercise therapy, a manual therapist, massage therapist and physical rehabilitation specialist. I tailor the technique to your needs.",
     creds: ["Exercise therapy MD", "Manual therapist", "Massage therapist", "Rehabilitation"],
-    writeAlla: "Message Alla on Telegram", askAlla: "Questions? Message Alla", services: "Services", studio: "Studio", openMap: "Open in maps", payment: "Payment methods",
+    services: "Services", studio: "Studio", openMap: "Open in maps", payment: "Payment methods",
+    writeAlla: "Message Alla on Telegram", askAlla: "Questions? Message Alla",
+    gallery: ["Massage room", "Prenatal massage support", "Rehabilitation area", "Waiting area", "Studio details", "Entrance"],
     min: "min", from: "from",
-    stepWhen: "When suits you?", stepContact: "Your details", stepReview: "Review your request",
-    duration: "Duration", date: "Date", time: "Time",
-    pickDate: "Pick a date first to see available times.", morning: "Morning", day: "Afternoon", evening: "Evening", noTimes: "No times left for this day. Please pick another date.",
+    stepSpec: "Who would you like to see?", stepWhen: "When suits you?", stepContact: "Your details", stepReview: "Review your request",
+    duration: "Duration", date: "Date", time: "Available times",
+    pickDate: "Pick a date to see available times.", noSlots: "No free times in the coming weeks. Message Alla and she'll find a slot.",
+    loadFail: "Couldn't load available times.", retry: "Retry",
     nameL: "Name", namePh: "What should we call you",
-    telL: "Phone or WhatsApp", telPh: "+54 9 11 ...", telHint: "Optional. Alla will reply in Telegram.",
-    commentL: "Notes", commentPh: "Complaints, contraindications, pregnancy",
-    commentHint: "Optional, but helps prepare the session.",
+    telL: "Phone or WhatsApp", telPh: "+54 9 11 ...", telHint: "Optional. We'll reply in Telegram.",
+    commentL: "Notes", commentPh: "Complaints, contraindications, pregnancy", commentHint: "Optional, but helps prepare the session.",
     payHow: "Preferred payment",
     next: "Next", send: "Send request",
-    sService: "Service", sWhen: "Date and time", sWho: "Name", sPay: "Payment", sWhere: "Address", total: "Total", change: "Change",
-    confirmNote: "This is a request. Alla will confirm the time in this chat, usually within a couple of hours.",
-    needWhen: "Choose duration, date and time", needName: "Please enter your name",
+    sService: "Service", sSpec: "Specialist", sWhen: "Date and time", sWho: "Name", sPay: "Payment", sWhere: "Address", total: "Total", change: "Change",
+    confirmNote: "This is a request. We'll confirm the time in this chat, usually within a couple of hours.",
+    prepayNote: (u) => `New clients pay a ${u} USD deposit. Payment details will arrive in the chat.`,
+    needSpec: "Choose a specialist", needWhen: "Choose duration, date and time", needName: "Please enter your name",
+    busy: "This time was just taken. Please pick another.",
     sendFail: "Couldn't send. Check your connection and try again.",
     notTg: "Sending works inside Telegram. Open the app from the bot.",
   },
 };
 const CRED_ICONS = ["ph-first-aid", "ph-hand", "ph-hand-heart", "ph-person-simple-walk"];
-const STEPS = ["when", "contact", "review"];
+const GALLERY = ["room-table", "prenatal", "rehab-zone", "lounge", "lamp", "entrance"];
 
 const guess = (tg?.initDataUnsafe?.user?.language_code || navigator.language || "ru").slice(0, 2);
 let lang = T[guess] ? guess : "en";
-const state = { screen: "home", step: 0, svc: null, opt: null, date: null, time: null, pay: C.payments[0] };
+const state = { screen: "home", steps: [], step: 0, svc: null, spec: null, opt: null, date: null, time: null, pay: C.payments[0], slots: null, slotsErr: false };
 
 const $ = (id) => document.getElementById(id);
 const t = (k) => T[lang][k];
 const locale = () => ({ ru: "ru-RU", es: "es-AR", en: "en-US" })[lang];
 const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
-const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const img = (base, sm = true) => `${base}${sm ? "-sm" : ""}.jpg`;
+const specsFor = (svc) => C.specialists.filter((s) => s.enabled && s.services.includes(svc.id));
+const fromIso = (s) => new Date(s + "T12:00:00");
+const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+async function api(path, body) {
+  const r = await fetch(API + path, body ? { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) } : undefined);
+  const j = await r.json().catch(() => ({}));
+  if (!r.ok) { const e = new Error(j.error || r.status); e.status = r.status; e.code = j.error; throw e; }
+  return j;
+}
 
 // ---------- Тема ----------
 function applyTheme() {
@@ -411,15 +511,10 @@ function applyTheme() {
 function renderHome() {
   document.documentElement.lang = lang;
   document.querySelectorAll("[data-t]").forEach((e) => (e.textContent = t(e.dataset.t)));
-  $("name").placeholder = t("namePh");
-  $("tel").placeholder = t("telPh");
-  $("comment").placeholder = t("commentPh");
-  $("addr").textContent = C.address;
-  $("mapLink").href = C.mapUrl;
-  $("phone").textContent = C.phone;
-  $("waLink").href = C.whatsapp;
-  $("tgLink").href = `https://t.me/${C.telegram}`;
-  $("tgUser").textContent = "@" + C.telegram;
+  $("name").placeholder = t("namePh"); $("tel").placeholder = t("telPh"); $("comment").placeholder = t("commentPh");
+  $("addr").textContent = C.address; $("mapLink").href = C.mapUrl;
+  $("phone").textContent = C.phone; $("waLink").href = C.whatsapp;
+  $("tgLink").href = `https://t.me/${C.telegram}`; $("tgUser").textContent = "@" + C.telegram;
   $("pays").textContent = C.payments.join(", ");
 
   $("langs").replaceChildren(...["ru", "es", "en"].map((l) => {
@@ -427,15 +522,14 @@ function renderHome() {
     b.onclick = () => { lang = l; haptic("select"); renderAll(); };
     return b;
   }));
-
   $("creds").replaceChildren(...t("creds").map((c, i) => el("span", "cred", `<i class="ph ${CRED_ICONS[i]}"></i>${esc(c)}`)));
+  $("gallery").replaceChildren(...GALLERY.map((g, i) =>
+    el("figure", "", `<img src="${img("img/" + g)}" alt="${esc(t("gallery")[i])}" loading="lazy"><figcaption>${esc(t("gallery")[i])}</figcaption>`)));
 
-  $("svcList").replaceChildren(...C.services.map((s) => {
+  $("svcList").replaceChildren(...C.services.filter((s) => specsFor(s).length).map((s) => {
     const card = el("article", "svc reveal");
-    const minP = Math.min(...s.options.map((o) => o.usd));
-    card.innerHTML = `<div class="svc-top"><div class="svc-name">${esc(s.name[lang])}</div>
-      <div class="svc-from">${s.options.length > 1 ? t("from") + " " : ""}${minP} USD</div></div>
-      <div class="svc-desc">${esc(s.desc[lang])}</div><div class="opts"></div>`;
+    card.innerHTML = `<img src="${img(s.photo)}" alt="" loading="lazy"><div class="svc-body"><div class="svc-name">${esc(s.name[lang])}</div>
+      <div class="svc-desc">${esc(s.desc[lang])}</div><div class="opts"></div></div>`;
     s.options.forEach((o) => {
       const b = el("button", "opt", `<span><b>${o.min}</b> ${t("min")}, ${o.usd} USD</span><span class="go"><i class="ph ph-arrow-right"></i></span>`);
       b.onclick = () => startFlow(s, o);
@@ -447,43 +541,49 @@ function renderHome() {
 }
 
 function observeReveal() {
-  if (reduceMotion || !("IntersectionObserver" in window)) {
-    document.querySelectorAll(".reveal").forEach((e) => e.classList.add("in"));
-    return;
-  }
-  const io = new IntersectionObserver((entries) => entries.forEach((en) => {
-    if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
-  }), { threshold: 0.12 });
+  if (reduceMotion || !("IntersectionObserver" in window)) { document.querySelectorAll(".reveal").forEach((e) => e.classList.add("in")); return; }
+  const io = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); } }), { threshold: 0.12 });
   document.querySelectorAll(".reveal:not(.in)").forEach((e) => io.observe(e));
+}
+
+function show(screen) {
+  state.screen = screen;
+  ["home", "flow", "admin"].forEach((s) => $(s).classList.toggle("hidden", s !== screen));
+  document.body.classList.toggle("flow", screen === "flow");
+  if (screen !== "flow") { $("dock").classList.add("hidden"); if (inTelegram) tg.MainButton.hide(); }
+  if (inTelegram) screen === "home" ? tg.BackButton.hide() : tg.BackButton.show();
+  scrollTo(0, 0);
 }
 
 // ---------- Запись ----------
 function startFlow(svc, opt) {
   haptic("impact");
-  Object.assign(state, { screen: "flow", step: 0, svc, opt: opt || (svc.options.length === 1 ? svc.options[0] : null) });
-  if (state.date && !freeHours().includes(state.time)) state.time = null;
+  const specs = specsFor(svc);
+  Object.assign(state, {
+    svc, opt: opt || (svc.options.length === 1 ? svc.options[0] : null),
+    spec: specs.length === 1 ? specs[0] : (specs.includes(state.spec) ? state.spec : null),
+    steps: specs.length > 1 ? ["spec", "when", "contact", "review"] : ["when", "contact", "review"],
+    step: 0, date: null, time: null, slots: null,
+  });
   if (!$("name").value && tg?.initDataUnsafe?.user) $("name").value = tg.initDataUnsafe.user.first_name || "";
-  $("home").classList.add("hidden");
-  $("flow").classList.remove("hidden");
-  document.body.classList.add("flow");
-  scrollTo(0, 0);
+  show("flow");
+  $("progress").style.gridTemplateColumns = `repeat(${state.steps.length}, 1fr)`;
+  $("progress").replaceChildren(...state.steps.map(() => el("span")));
+  if (state.spec) loadSlots();
   renderFlow(true);
 }
 
 function goBack() {
   haptic("select");
+  if (state.screen === "admin") { show("home"); return; }
   if (state.step > 0) { state.step--; renderFlow(true); scrollTo(0, 0); return; }
-  state.screen = "home";
-  $("flow").classList.add("hidden");
-  $("home").classList.remove("hidden");
-  document.body.classList.remove("flow");
-  $("dock").classList.add("hidden");
-  if (inTelegram) { tg.BackButton.hide(); tg.MainButton.hide(); }
-  document.getElementById("services").scrollIntoView();
+  show("home");
+  $("services").scrollIntoView();
 }
 
 function goNext() {
-  const step = STEPS[state.step];
+  const step = state.steps[state.step];
+  if (step === "spec" && !state.spec) return fail(t("needSpec"), "specList");
   if (step === "when") {
     const miss = { lDur: !state.opt, lDate: !state.date, lTime: !state.time };
     Object.entries(miss).forEach(([id, bad]) => $(id).classList.toggle("err", bad));
@@ -508,74 +608,112 @@ function fail(msg, anchorId) {
   $(anchorId)?.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
 }
 
-function workDates() {
-  const out = [];
-  const d = new Date(); d.setHours(0, 0, 0, 0);
-  for (let i = 0; i < C.daysAhead; i++) {
-    const x = new Date(d); x.setDate(d.getDate() + i);
-    if (C.workDays.includes(x.getDay())) out.push(x);
+// Свободное время с сервера (учитывает записи, закрытые дни и Google Календарь)
+async function loadSlots() {
+  if (!state.spec || !state.opt) return;
+  const key = `${state.spec.id}:${state.opt.min}`;
+  state.slots = null; state.slotsErr = false; state.slotsKey = key;
+  renderFlow(false);
+  try {
+    const r = API ? await api(`/api/slots?spec=${state.spec.id}&min=${state.opt.min}`) : { slots: localSlots() };
+    if (state.slotsKey !== key) return;
+    state.slots = r.slots;
+    if (state.date && !(state.slots[state.date] || []).includes(state.time)) state.time = null;
+    if (state.date && !state.slots[state.date]) state.date = null;
+    if (!state.date) state.date = Object.keys(state.slots)[0] || null;
+  } catch { state.slotsErr = true; }
+  renderFlow(false);
+}
+// Запасной вариант без сервера: сетка по длительности блока
+function localSlots() {
+  const out = {}, block = C.blockMinutes?.[state.opt.min] || state.opt.min + 20;
+  const toM = (h) => +h.split(":")[0] * 60 + +h.split(":")[1];
+  const d0 = new Date(); d0.setHours(0, 0, 0, 0);
+  for (let i = 1; i < (C.daysAhead || 21); i++) {
+    const d = new Date(d0); d.setDate(d0.getDate() + i);
+    if (!state.spec.workDays.includes(d.getDay())) continue;
+    const list = [];
+    for (let m = toM(state.spec.from); m + block <= toM(state.spec.to); m += block) list.push(`${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}`);
+    out[iso(d)] = list;
   }
   return out;
 }
-const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-const fromIso = (s) => new Date(s + "T12:00:00");
 
-function freeHours() {
-  // Сегодня не показываем часы, до которых осталось меньше 2 часов
-  if (state.date !== iso(new Date())) return C.hours;
-  const limit = new Date().getHours() + 2;
-  return C.hours.filter((h) => parseInt(h) >= limit);
-}
-
-function chip(html, on, onClick, cls = "") {
+function chip(html, on, onClick, cls = "", disabled = false) {
   const b = el("button", `chip ${cls} ${on ? "on" : ""}`, html);
+  b.disabled = disabled;
   b.onclick = () => { haptic("select"); onClick(); renderFlow(false); };
   return b;
 }
 
+function workDates() {
+  const out = [];
+  const d = new Date(); d.setHours(0, 0, 0, 0);
+  for (let i = 0; i < (C.daysAhead || 21); i++) {
+    const x = new Date(d); x.setDate(d.getDate() + i);
+    if (state.spec?.workDays.includes(x.getDay())) out.push(x);
+  }
+  return out;
+}
+
 function renderFlow(animate) {
-  const step = STEPS[state.step];
+  const step = state.steps[state.step];
   const s = state.svc;
-  $("flowTitle").textContent = t({ when: "stepWhen", contact: "stepContact", review: "stepReview" }[step]);
+  $("flowTitle").textContent = t({ spec: "stepSpec", when: "stepWhen", contact: "stepContact", review: "stepReview" }[step]);
   [...$("progress").children].forEach((p, i) => p.classList.toggle("done", i <= state.step));
-  const ids = { when: "stepWhen", contact: "stepContact", review: "stepReview" };
+  const ids = { spec: "stepSpec", when: "stepWhen", contact: "stepContact", review: "stepReview" };
   Object.entries(ids).forEach(([k, id]) => {
     const node = $(id);
     node.classList.toggle("hidden", k !== step);
     if (k === step && animate && !reduceMotion) { node.classList.remove("enter"); void node.offsetWidth; node.classList.add("enter"); }
   });
 
+  if (step === "spec") {
+    $("specList").replaceChildren(...specsFor(s).map((sp) => {
+      const b = el("button", `spec-card ${state.spec === sp ? "on" : ""}`,
+        `<img src="${img(sp.photo)}" alt=""><div><b>${esc(sp.name[lang])}</b><small>${esc(sp.role[lang])}</small></div>`);
+      b.onclick = () => { haptic("select"); state.spec = sp; state.date = null; state.time = null; loadSlots(); goNext(); };
+      return b;
+    }));
+  }
+
   if (step === "when") {
-    $("pickedCard").innerHTML = `<div class="photo photo-top"></div><div><b>${esc(s.name[lang])}</b>
-      <small>${state.opt ? `${state.opt.min} ${t("min")}, ${state.opt.usd} USD` : esc(s.desc[lang])}</small></div>`;
+    $("pickedCard").innerHTML = `<img src="${img(s.photo)}" alt=""><div><b>${esc(s.name[lang])}</b>
+      <small>${[state.spec && specsFor(s).length > 1 ? esc(state.spec.name[lang]) : "", state.opt ? `${state.opt.min} ${t("min")}, ${state.opt.usd} USD` : ""].filter(Boolean).join(" · ")}</small></div>`;
     $("durBlock").classList.toggle("hidden", s.options.length < 2);
     $("durs").replaceChildren(...s.options.map((o) =>
-      chip(`${o.min} ${t("min")}<small>${o.usd} USD</small>`, state.opt === o, () => { state.opt = o; $("lDur").classList.remove("err"); })));
+      chip(`${o.min} ${t("min")}<small>${o.usd} USD</small>`, state.opt === o, () => {
+        if (state.opt === o) return;
+        state.opt = o; $("lDur").classList.remove("err"); loadSlots();
+      })));
 
     const wd = new Intl.DateTimeFormat(locale(), { weekday: "short" });
     const mo = new Intl.DateTimeFormat(locale(), { month: "short" });
+    const has = (d) => !!state.slots?.[iso(d)]?.length;
     $("dates").replaceChildren(...workDates().map((d) =>
       chip(`<span>${wd.format(d)}</span><b>${d.getDate()}</b><span>${mo.format(d).replace(".", "")}</span>`,
         state.date === iso(d), () => {
           state.date = iso(d); $("lDate").classList.remove("err");
-          if (!freeHours().includes(state.time)) state.time = null;
-        }, "day")));
+          if (!(state.slots?.[state.date] || []).includes(state.time)) state.time = null;
+        }, "day", state.slots ? !has(d) : true)));
 
-    if (!state.date) { $("times").replaceChildren(el("div", "empty", esc(t("pickDate")))); }
-    else {
-      const hours = freeHours();
-      const groups = [["morning", "ph-sun-horizon", (h) => h < 12], ["day", "ph-sun", (h) => h >= 12 && h < 17], ["evening", "ph-moon", (h) => h >= 17]];
-      const nodes = groups.map(([key, icon, test]) => {
-        const hs = hours.filter((h) => test(parseInt(h)));
-        if (!hs.length) return null;
-        const g = el("div", "times-group", `<h4><i class="ph ${icon}"></i>${t(key)}</h4>`);
-        const grid = el("div", "times");
-        hs.forEach((h) => grid.append(chip(h, state.time === h, () => { state.time = h; $("lTime").classList.remove("err"); })));
-        g.append(grid);
-        return g;
-      }).filter(Boolean);
-      $("times").replaceChildren(...(nodes.length ? nodes : [el("div", "empty", esc(t("noTimes")))]));
+    let nodes;
+    if (state.slotsErr) {
+      const b = el("button", "btn btn-ghost btn-sm", `<i class="ph ph-arrow-clockwise"></i>${esc(t("retry"))}`);
+      b.onclick = loadSlots;
+      const box = el("div", "empty", esc(t("loadFail")) + "<br><br>"); box.append(b); nodes = [box];
+    } else if (!state.slots) {
+      const g = el("div", "times"); for (let i = 0; i < 6; i++) g.append(el("div", "skel")); nodes = [g];
+    } else if (!Object.keys(state.slots).length) {
+      nodes = [el("div", "empty", esc(t("noSlots")))];
+    } else if (!state.date) {
+      nodes = [el("div", "empty", esc(t("pickDate")))];
+    } else {
+      const g = el("div", "times");
+      (state.slots[state.date] || []).forEach((h) => g.append(chip(h, state.time === h, () => { state.time = h; $("lTime").classList.remove("err"); })));
+      nodes = [g];
     }
+    $("times").replaceChildren(...nodes);
   }
 
   if (step === "contact") {
@@ -588,73 +726,334 @@ function renderFlow(animate) {
 
   if (step === "review") {
     const when = new Intl.DateTimeFormat(locale(), { weekday: "long", day: "numeric", month: "long" }).format(fromIso(state.date));
-    const row = (icon, k, v, go) => `<div class="sum-row"><i class="ph ${icon}"></i><div style="flex:1"><div class="k">${esc(k)}</div>
-      <div class="v">${v}</div></div>${go != null ? `<button class="edit" data-go="${go}">${esc(t("change"))}</button>` : ""}</div>`;
-    $("summary").innerHTML = `<div class="photo photo-top"></div><div class="sum-body">
-      ${row("ph-hand-heart", t("sService"), `${esc(s.name[lang])}, ${state.opt.min} ${t("min")}`, 0)}
-      ${row("ph-calendar-check", t("sWhen"), `${esc(when)}, ${state.time}`, 0)}
-      ${row("ph-user", t("sWho"), esc($("name").value.trim()) + ($("tel").value.trim() ? `<br><span style="color:var(--muted)">${esc($("tel").value.trim())}</span>` : ""), 1)}
-      ${row("ph-wallet", t("sPay"), esc(state.pay), 1)}
-      ${row("ph-map-pin", t("sWhere"), esc(C.address))}
+    const go = (k) => state.steps.indexOf(k);
+    const row = (icon, k, v, g) => `<div class="sum-row"><i class="ph ${icon}"></i><div style="flex:1"><div class="k">${esc(k)}</div>
+      <div class="v">${v}</div></div>${g >= 0 ? `<button class="edit" data-go="${g}">${esc(t("change"))}</button>` : ""}</div>`;
+    const tel = $("tel").value.trim();
+    $("summary").innerHTML = `<img src="${img(state.spec?.photo || "img/alla-hero")}" alt=""><div class="sum-body">
+      ${row("ph-hand-heart", t("sService"), `${esc(s.name[lang])}, ${state.opt.min} ${t("min")}`, go("when"))}
+      ${specsFor(s).length > 1 ? row("ph-user-circle", t("sSpec"), esc(state.spec.name[lang]), go("spec")) : ""}
+      ${row("ph-calendar-check", t("sWhen"), `${esc(when)}, ${state.time}`, go("when"))}
+      ${row("ph-user", t("sWho"), esc($("name").value.trim()) + (tel ? `<br><span style="color:var(--muted)">${esc(tel)}</span>` : ""), go("contact"))}
+      ${row("ph-wallet", t("sPay"), esc(state.pay), go("contact"))}
+      ${row("ph-map-pin", t("sWhere"), esc(C.address), -1)}
       </div><div class="total"><span>${esc(t("total"))}</span><b>${state.opt.usd} USD</b></div>`;
     $("summary").querySelectorAll("[data-go]").forEach((b) => (b.onclick = () => { state.step = +b.dataset.go; renderFlow(true); scrollTo(0, 0); }));
+    const pn = $("prepayNote");
+    pn.classList.toggle("hidden", !C.prepay?.enabled);
+    pn.querySelector("span").textContent = C.prepay?.enabled ? t("prepayNote")(C.prepay.usd) : "";
   }
 
-  // Главная кнопка: в Telegram нативная, в браузере своя
+  // Главная кнопка: в Telegram нативная, в браузере своя. На шаге выбора специалиста не нужна
   const label = step === "review" ? `${t("send")}, ${state.opt.usd} USD` : t("next");
+  const needBtn = step !== "spec";
   if (inTelegram) {
     tg.BackButton.show();
     tg.MainButton.setText(label);
-    tg.MainButton.show();
+    needBtn ? tg.MainButton.show() : tg.MainButton.hide();
     $("backBtn").classList.add("hidden");
   } else {
     $("dockBtn").innerHTML = `${esc(label)} <i class="ph ${step === "review" ? "ph-paper-plane-tilt" : "ph-arrow-right"}"></i>`;
-    $("dock").classList.remove("hidden");
+    $("dock").classList.toggle("hidden", !needBtn);
   }
 }
 
 // ---------- Отправка ----------
 async function submit() {
   const payload = {
-    v: 1, l: lang, s: state.svc.id, m: state.opt.min, u: state.opt.usd,
+    v: 2, l: lang, s: state.svc.id, sp: state.spec.id, m: state.opt.min, u: state.opt.usd,
     d: state.date, t: state.time, pay: state.pay,
     n: $("name").value.trim().slice(0, 80), p: $("tel").value.trim().slice(0, 40), c: $("comment").value.trim().slice(0, 600),
   };
   if (!inTelegram) { toast(t("notTg")); console.log("payload", payload); return; }
-  // Без сервера: заявка уходит через Telegram (работает только с нижней кнопки чата)
-  if (!C.api) {
-    haptic("success");
-    return tg.sendData(JSON.stringify(payload)); // Telegram закроет Mini App и передаст заявку боту
-  }
-  // С сервером: работает из любой кнопки (меню, профиль бота, нижняя кнопка). Сервер проверяет подпись Telegram
+  if (!API) { haptic("success"); return tg.sendData(JSON.stringify(payload)); }
   if (submit.busy) return;
   submit.busy = true;
   tg.MainButton.showProgress();
   try {
-    const r = await fetch(C.api, {
-      method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ initData: tg.initData, booking: payload }),
-    });
-    if (!r.ok) throw new Error(r.status);
+    await api("/api/book", { initData: tg.initData, booking: payload });
     haptic("success");
     tg.close(); // подтверждение уже пришло в чат с ботом
   } catch (e) {
-    try { tg.sendData(JSON.stringify(payload)); } catch {} // запасной путь для нижней кнопки
     haptic("error");
-    toast(t("sendFail"));
+    if (e.status === 409) {
+      toast(t("busy"));
+      state.step = state.steps.indexOf("when"); state.time = null;
+      loadSlots(); renderFlow(true);
+    } else toast(t("sendFail"));
   } finally {
     submit.busy = false;
     tg.MainButton.hideProgress();
   }
 }
 
+// ================= Кабинет администратора (только на русском) =================
+const adm = { tab: "bookings", data: null, form: null, q: "" };
+const svcName = (id) => C.services.find((s) => s.id === id)?.name.ru || id;
+const specName = (id) => id === "all" ? "Все" : C.specialists.find((s) => s.id === id)?.name.ru || id;
+const ruDay = (d) => new Intl.DateTimeFormat("ru-RU", { weekday: "long", day: "numeric", month: "long" }).format(fromIso(d));
+
+async function openAdmin() {
+  haptic("impact");
+  show("admin");
+  await loadAdmin();
+}
+async function loadAdmin() {
+  $("admBody").innerHTML = `<div class="times" style="margin-top:12px"><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>`;
+  try {
+    adm.data = await api("/api/admin", { initData: tg.initData, action: "overview" });
+    renderAdmin();
+  } catch { $("admBody").innerHTML = `<div class="empty" style="margin-top:12px">Не получилось загрузить данные. Нажмите ↻ вверху.</div>`; }
+}
+async function admAction(body, okMsg) {
+  try {
+    const r = await api("/api/admin", { initData: tg.initData, ...body });
+    haptic("success");
+    if (okMsg) toast(typeof okMsg === "function" ? okMsg(r) : okMsg);
+    await loadAdmin();
+    return r;
+  } catch (e) {
+    haptic("error");
+    toast(e.status === 409 ? "Это время занято. Отметьте «Разрешить пересечение», если всё равно нужно." : "Не получилось, попробуйте ещё раз");
+  }
+}
+
+function renderAdmin() {
+  const tabs = [["bookings", "Записи"], ["block", "Закрыть время"], ["clients", "Клиенты"], ["stats", "Статистика"], ["calendar", "Календарь"]];
+  $("admTabs").replaceChildren(...tabs.map(([k, v]) => {
+    const b = el("button", adm.tab === k ? "on" : "", v);
+    b.onclick = () => { adm.tab = k; adm.form = null; haptic("select"); renderAdmin(); };
+    return b;
+  }));
+  const body = $("admBody");
+  body.replaceChildren();
+  ({ bookings: admBookings, block: admBlock, clients: admClients, stats: admStats, calendar: admCalendar })[adm.tab](body);
+}
+
+function admBookings(body) {
+  const add = el("button", "btn btn-primary btn-block", `<i class="ph ph-plus"></i>Добавить запись`);
+  add.style.marginTop = "8px";
+  add.onclick = () => { adm.form = adm.form ? null : "add"; renderAdmin(); };
+  body.append(add);
+  if (adm.form === "add") body.append(addForm());
+
+  const list = adm.data.bookings.filter((b) => b.status !== "no" && b.status !== "cancelled");
+  if (!list.length) { body.append(el("div", "empty", "Будущих записей пока нет.")); body.lastChild.style.marginTop = "16px"; return; }
+  let day = "";
+  for (const b of list) {
+    if (b.date !== day) { day = b.date; body.append(el("div", "day-h", ruDay(day))); }
+    const card = el("div", "bk");
+    const st = { new: ["new", "ph-hourglass", "Ждёт подтверждения"], ok: ["ok", "ph-check-circle", "Подтверждено"] }[b.status];
+    const pp = { required: ["warn", "ph-credit-card", "Нужна предоплата"], paid: ["ok", "ph-coins", "Предоплата получена"], subscription: ["ok", "ph-ticket", "Абонемент"] }[b.prepay];
+    card.innerHTML = `<div class="bk-top"><div class="bk-time">${b.time}</div><div class="bk-main">
+      <b>${esc(b.name)}</b><small>${esc(svcName(b.service))}, ${b.min} мин, ${b.usd} USD</small>
+      <small>${[specName(b.spec), b.phone, b.username ? "@" + b.username : ""].filter(Boolean).map(esc).join(" · ")}</small>
+      ${b.comment ? `<small>«${esc(b.comment)}»</small>` : ""}</div></div>
+      <div class="tags"><span class="tag ${st[0]}"><i class="ph ${st[1]}"></i>${st[2]}</span>${pp ? `<span class="tag ${pp[0]}"><i class="ph ${pp[1]}"></i>${pp[2]}</span>` : ""}
+      ${b.source === "admin" ? `<span class="tag"><i class="ph ph-pencil-simple"></i>Добавлено вручную</span>` : ""}</div>
+      <div class="bk-actions"></div>`;
+    const act = card.querySelector(".bk-actions");
+    const btn = (cls, html, fn) => { const x = el("button", `btn btn-sm ${cls}`, html); x.onclick = fn; act.append(x); };
+    if (b.status === "new") btn("btn-primary", `<i class="ph ph-check"></i>Подтвердить`, () => admAction({ action: "confirm", id: b.id }, "Клиент получил подтверждение"));
+    if (b.prepay === "required") btn("btn-ghost", `<i class="ph ph-coins"></i>Оплата получена`, () => admAction({ action: "prepaid", id: b.id }, "Отмечено"));
+    if (b.username) { const a = el("a", "btn btn-sm btn-ghost", `<i class="ph ph-telegram-logo"></i>Написать`); a.href = `https://t.me/${b.username}`; a.onclick = (e) => { if (inTelegram) { e.preventDefault(); tg.openTelegramLink(a.href); } }; act.append(a); }
+    btn("btn-danger", `<i class="ph ph-x"></i>Отменить`, () => {
+      const go = () => admAction({ action: "cancel", id: b.id }, "Запись отменена, время освободилось");
+      if (inTelegram && tg.showConfirm) tg.showConfirm(`Отменить запись ${b.name}, ${b.time}? Клиент получит сообщение.`, (yes) => yes && go());
+      else go();
+    });
+    body.append(card);
+  }
+}
+
+function specOptions(withAll) {
+  return (withAll ? [`<option value="all">Все специалисты</option>`] : []).concat(
+    C.specialists.map((s) => `<option value="${s.id}">${esc(s.name.ru)}${s.enabled ? "" : " (скрыт от клиентов)"}</option>`)).join("");
+}
+
+function addForm() {
+  const f = el("div", "card");
+  const today = iso(new Date());
+  f.innerHTML = `<h3>Новая запись</h3><p>Запись сразу подтверждена. Клиенту бот не пишет.</p>
+    <div class="field"><label>Специалист</label><select id="fSpec">${specOptions(false)}</select></div>
+    <div class="field"><label>Услуга</label><select id="fSvc"></select></div>
+    <div class="field"><label>Длительность</label><select id="fDur"></select></div>
+    <div class="grid2"><div class="field"><label>Дата</label><input id="fDate" type="date" value="${today}"></div>
+    <div class="field"><label>Время</label><input id="fTime" type="time" value="10:30" step="900"></div></div>
+    <div class="field"><label>Имя клиента</label><input id="fName"></div>
+    <div class="field"><label>Телефон</label><input id="fTel" type="tel"></div>
+    <div class="field"><label>Комментарий</label><input id="fCom"></div>
+    <div class="field"><label>Оплата</label><select id="fPay">${C.payments.map((p) => `<option>${p}</option>`).join("")}</select></div>
+    <label class="check"><input type="checkbox" id="fForce">Разрешить пересечение с другой записью</label>
+    <button class="btn btn-primary btn-block" id="fSave" style="margin-top:16px">Сохранить</button>`;
+  const fill = () => {
+    const sp = C.specialists.find((s) => s.id === f.querySelector("#fSpec").value);
+    const svcs = C.services.filter((s) => sp.services.includes(s.id));
+    const cur = f.querySelector("#fSvc").value;
+    f.querySelector("#fSvc").innerHTML = svcs.map((s) => `<option value="${s.id}" ${s.id === cur ? "selected" : ""}>${esc(s.name.ru)}</option>`).join("");
+    fillDur();
+  };
+  const fillDur = () => {
+    const s = C.services.find((x) => x.id === f.querySelector("#fSvc").value);
+    f.querySelector("#fDur").innerHTML = s.options.map((o) => `<option value="${o.min}">${o.min} мин, ${o.usd} USD</option>`).join("");
+  };
+  f.querySelector("#fSpec").onchange = fill;
+  f.querySelector("#fSvc").onchange = fillDur;
+  setTimeout(fill);
+  f.querySelector("#fSave").onclick = () => {
+    const v = (id) => f.querySelector(id).value.trim();
+    if (!v("#fName")) return toast("Укажите имя клиента");
+    admAction({ action: "add", booking: { sp: v("#fSpec"), s: v("#fSvc"), m: +v("#fDur"), d: v("#fDate"), t: v("#fTime"), n: v("#fName"), p: v("#fTel"), c: v("#fCom"), pay: v("#fPay"), force: f.querySelector("#fForce").checked } },
+      "Запись добавлена").then((r) => { if (r) adm.form = null; });
+  };
+  return f;
+}
+
+function admBlock(body) {
+  const today = iso(new Date());
+  const f = el("div", "card");
+  f.innerHTML = `<h3>Закрыть время</h3><p>Отпуск, выходной или несколько часов. Клиенты не смогут записаться на это время.</p>
+    <div class="field"><label>Специалист</label><select id="bSpec">${specOptions(true)}</select></div>
+    <div class="grid2"><div class="field"><label>С</label><input id="bFrom" type="date" value="${today}"></div>
+    <div class="field"><label>По</label><input id="bTo" type="date" value="${today}"></div></div>
+    <label class="check"><input type="checkbox" id="bHours">Только часть дня</label>
+    <div class="grid2 hidden" id="bHoursRow"><div class="field"><label>С</label><input id="bStart" type="time" value="13:00"></div>
+    <div class="field"><label>До</label><input id="bEnd" type="time" value="15:00"></div></div>
+    <div class="field"><label>Заметка (видите только вы)</label><input id="bNote" placeholder="Отпуск"></div>
+    <button class="btn btn-primary btn-block" id="bSave" style="margin-top:16px"><i class="ph ph-lock-simple"></i>Закрыть</button>`;
+  f.querySelector("#bHours").onchange = (e) => f.querySelector("#bHoursRow").classList.toggle("hidden", !e.target.checked);
+  f.querySelector("#bSave").onclick = () => {
+    const v = (id) => f.querySelector(id).value;
+    const block = { spec: v("#bSpec"), from: v("#bFrom"), to: v("#bTo") || v("#bFrom"), note: v("#bNote") };
+    if (f.querySelector("#bHours").checked) Object.assign(block, { start: v("#bStart"), end: v("#bEnd") });
+    if (block.to < block.from) return toast("Дата «по» раньше даты «с»");
+    admAction({ action: "block", block }, "Время закрыто");
+  };
+  body.append(f);
+
+  const blocks = adm.data.blocks.slice().sort((a, b) => a.from.localeCompare(b.from));
+  body.append(el("div", "day-h", "Закрытое время"));
+  if (!blocks.length) return body.append(el("div", "empty", "Ничего не закрыто."));
+  const list = el("div", "card");
+  for (const b of blocks) {
+    const row = el("div", "cl");
+    const dates = b.from === b.to ? ruDay(b.from) : `${ruDay(b.from)} - ${ruDay(b.to)}`;
+    const hours = b.start != null ? `, ${String(Math.floor(b.start / 60)).padStart(2, "0")}:${String(b.start % 60).padStart(2, "0")}-${String(Math.floor(b.end / 60)).padStart(2, "0")}:${String(b.end % 60).padStart(2, "0")}` : ", весь день";
+    row.innerHTML = `<div class="tx"><b>${esc(dates)}</b><small>${esc(specName(b.spec))}${hours}${b.note ? " · " + esc(b.note) : ""}</small></div>`;
+    const x = el("button", "btn btn-sm btn-ghost", "Открыть");
+    x.onclick = () => admAction({ action: "unblock", id: b.id }, "Время снова открыто");
+    row.append(x);
+    list.append(row);
+  }
+  body.append(list);
+}
+
+function admClients(body) {
+  const f = el("div", "card");
+  f.innerHTML = `<h3>Абонементы</h3><p>Сколько оплаченных сеансов осталось у клиента. С абонементом предоплата не нужна, при подтверждении записи сеанс списывается сам.</p>
+    <div class="field"><input id="cQ" placeholder="Поиск по имени или телефону" value="${esc(adm.q)}"></div>`;
+  body.append(f);
+  const list = el("div", "card");
+  const draw = () => {
+    const q = adm.q.toLowerCase();
+    const entries = Object.entries(adm.data.clients).filter(([, c]) => !q || `${c.name} ${c.phone} ${c.username || ""}`.toLowerCase().includes(q))
+      .sort((a, b) => (b[1].sub - a[1].sub) || a[1].name.localeCompare(b[1].name));
+    list.replaceChildren();
+    if (!entries.length) return list.append(el("p", "", "Клиентов пока нет. Они появятся после первой записи."));
+    for (const [key, c] of entries) {
+      const row = el("div", "cl");
+      row.innerHTML = `<div class="tx"><b>${esc(c.name || "Без имени")}</b><small>${[c.phone, c.username ? "@" + c.username : "", `визитов: ${c.visits || 0}`].filter(Boolean).map(esc).join(" · ")}</small></div>
+        <div class="stepper"><button aria-label="Минус"><i class="ph ph-minus"></i></button><b>${c.sub || 0}</b><button aria-label="Плюс"><i class="ph ph-plus"></i></button></div>`;
+      const [minus, plus] = row.querySelectorAll("button");
+      minus.onclick = () => admAction({ action: "client", key, sub: Math.max(0, (c.sub || 0) - 1) });
+      plus.onclick = () => admAction({ action: "client", key, sub: (c.sub || 0) + 1 });
+      list.append(row);
+    }
+  };
+  f.querySelector("#cQ").oninput = (e) => { adm.q = e.target.value; draw(); };
+  draw();
+  body.append(el("div", "day-h", "Клиенты"), list);
+
+  const n = el("div", "card");
+  n.innerHTML = `<h3>Добавить клиента</h3><p>Например, если абонемент купили не через бота.</p>
+    <div class="field"><label>Имя</label><input id="nName"></div>
+    <div class="grid2"><div class="field"><label>Телефон</label><input id="nTel" type="tel"></div>
+    <div class="field"><label>Сеансов</label><input id="nSub" type="number" min="0" value="5"></div></div>
+    <button class="btn btn-primary btn-block" id="nSave" style="margin-top:16px">Сохранить</button>`;
+  n.querySelector("#nSave").onclick = () => {
+    const name = n.querySelector("#nName").value.trim(), phone = n.querySelector("#nTel").value.trim();
+    if (!name || !phone) return toast("Нужны имя и телефон");
+    admAction({ action: "client", name, phone, sub: +n.querySelector("#nSub").value }, "Клиент сохранён");
+  };
+  body.append(n);
+}
+
+function admStats(body) {
+  const rows = adm.data.stats;
+  const sum = (k) => rows.reduce((a, r) => a + r[k], 0);
+  const uniq = sum("appU"), books = sum("book");
+  const conv = uniq ? Math.round(books / uniq * 100) : 0;
+  body.append(el("p", "note", `<i class="ph ph-info"></i><span>За последние 30 дней. Ваши собственные заходы и заходы администраторов не считаются.</span>`));
+  const tiles = el("div", "tiles");
+  [["Заходы в приложение", sum("app")], ["Уникальные посетители", uniq], ["Заявки на запись", books], ["Конверсия в заявку", conv + "%"],
+   ["Заходы на сайт", sum("site")], ["Нажали «Записаться» на сайте", sum("cta")]]
+    .forEach(([k, v]) => tiles.append(el("div", "tile", `<small>${k}</small><b>${v}</b>`)));
+  body.append(tiles);
+
+  // Один ряд данных: уникальные посетители приложения и сайта по дням
+  const data = rows.map((r) => ({ day: r.day, v: r.appU + r.siteU, b: r.book }));
+  const max = Math.max(1, ...data.map((d) => d.v));
+  const chart = el("div", "chart", `<h3>Посетители по дням</h3><div class="bars"></div><div class="axis"><span></span><span></span></div><div class="tip">Нажмите на столбик, чтобы увидеть день</div>`);
+  const bars = chart.querySelector(".bars");
+  const fmt = (d) => new Intl.DateTimeFormat("ru-RU", { day: "numeric", month: "short" }).format(fromIso(d));
+  data.forEach((d) => {
+    const b = el("button", "", `<span style="height:${Math.round(d.v / max * 100)}%"></span>`);
+    b.setAttribute("aria-label", `${fmt(d.day)}: ${d.v} посетителей, ${d.b} заявок`);
+    const showTip = () => { bars.querySelectorAll("button").forEach((x) => x.classList.remove("on")); b.classList.add("on");
+      chart.querySelector(".tip").innerHTML = `<b>${fmt(d.day)}</b>: посетителей ${d.v}, заявок ${d.b}`; };
+    b.onclick = showTip; b.onmouseenter = showTip;
+    bars.append(b);
+  });
+  const [a0, a1] = chart.querySelectorAll(".axis span");
+  a0.textContent = fmt(data[0].day); a1.textContent = fmt(data.at(-1).day);
+  body.append(chart);
+}
+
+function admCalendar(body) {
+  const c = el("div", "card");
+  c.innerHTML = `<h3>Записи в Google Календаре</h3>
+    <p>Подтверждённые записи сами появятся в вашем календаре. Google обновляет такие календари раз в несколько часов, поэтому у каждой новой заявки есть ещё кнопка «📅 В Google Календарь» для мгновенного добавления.</p>
+    <ol class="steps"><li>Скопируйте ссылку ниже.</li><li>Откройте Google Календарь на компьютере: слева «Другие календари», плюс, «Добавить по URL».</li><li>Вставьте ссылку и нажмите «Добавить календарь».</li></ol>
+    <div class="copy"><input readonly value="${esc(adm.data.icsUrl)}"><button class="btn btn-sm btn-primary">Копировать</button></div>`;
+  c.querySelector(".copy button").onclick = async () => {
+    try { await navigator.clipboard.writeText(adm.data.icsUrl); toast("Ссылка скопирована"); }
+    catch { c.querySelector(".copy input").select(); toast("Выделите и скопируйте ссылку"); }
+  };
+  body.append(c);
+
+  for (const sp of C.specialists.filter((s) => s.enabled)) {
+    const cur = adm.data.calendars?.[sp.id] || "";
+    const k = el("div", "card");
+    k.innerHTML = `<h3>Занятость из календаря: ${esc(sp.name.ru)}</h3>
+      <p>Всё, что отмечено в Google Календаре как «Занят», бот не предложит клиентам.</p>
+      <ol class="steps"><li>Google Календарь на компьютере: шестерёнка, «Настройки», слева выберите свой календарь.</li><li>Внизу найдите «Секретный адрес в формате iCal» и скопируйте его.</li><li>Вставьте сюда и сохраните.</li></ol>
+      <div class="field"><input placeholder="https://calendar.google.com/calendar/ical/..." value="${esc(cur)}"></div>
+      <div class="bk-actions"><button class="btn btn-sm btn-primary">Сохранить</button>${cur ? `<button class="btn btn-sm btn-danger">Отключить</button>` : ""}</div>
+      <p style="margin-top:8px">${cur ? "✓ Подключено" : "Не подключено"}</p>`;
+    const [save, off] = k.querySelectorAll(".bk-actions button");
+    save.onclick = () => admAction({ action: "calendar", spec: sp.id, url: k.querySelector("input").value }, "Календарь подключён");
+    if (off) off.onclick = () => admAction({ action: "calendar", spec: sp.id, url: "" }, "Календарь отключён");
+    body.append(k);
+  }
+}
+
+// ---------- Общее ----------
 function toast(msg) {
   const n = $("toast");
   n.textContent = msg; n.classList.remove("hidden");
   n.style.animation = "none"; void n.offsetWidth; n.style.animation = "";
-  clearTimeout(toast.tm); toast.tm = setTimeout(() => n.classList.add("hidden"), 2800);
+  clearTimeout(toast.tm); toast.tm = setTimeout(() => n.classList.add("hidden"), 3000);
 }
-
 function haptic(kind) {
   const h = tg?.HapticFeedback;
   if (!inTelegram || !h) return;
@@ -662,7 +1061,6 @@ function haptic(kind) {
   else if (kind === "impact") h.impactOccurred("light");
   else h.notificationOccurred(kind);
 }
-
 function renderAll() { renderHome(); if (state.screen === "flow") renderFlow(false); }
 
 // ---------- Старт ----------
@@ -670,15 +1068,13 @@ const openServices = () => { haptic("impact"); $("services").scrollIntoView({ be
 $("heroCta").onclick = openServices;
 $("footCta").onclick = openServices;
 $("backBtn").onclick = goBack;
-// Ссылки на Telegram Аллы: внутри Telegram открываем нативно, чтобы Mini App не уходил в браузер
-const openAlla = (e) => {
-  if (!inTelegram) return;
-  e.preventDefault();
-  tg.openTelegramLink(`https://t.me/${C.telegram}`);
-};
+$("admBack").onclick = goBack;
+$("admReload").onclick = () => { haptic("select"); loadAdmin(); };
+$("adminBtn").onclick = openAdmin;
+$("dockBtn").onclick = goNext;
+const openAlla = (e) => { if (!inTelegram) return; e.preventDefault(); tg.openTelegramLink(`https://t.me/${C.telegram}`); };
 $("tgLink").onclick = openAlla;
 document.querySelectorAll(".tg-alla").forEach((a) => { a.href = `https://t.me/${C.telegram}`; a.target = "_blank"; a.onclick = openAlla; });
-$("dockBtn").onclick = goNext;
 applyTheme();
 renderAll();
 if (inTelegram) {
@@ -687,6 +1083,11 @@ if (inTelegram) {
   tg.onEvent("themeChanged", applyTheme);
   tg.BackButton.onClick(goBack);
   tg.MainButton.onClick(goNext);
+  if (API) {
+    // Статистика и проверка, не администратор ли открыл приложение
+    api("/api/hit", { src: "app", initData: tg.initData }).catch(() => {});
+    api("/api/me", { initData: tg.initData }).then((r) => { if (r.admin) $("adminPill").classList.remove("hidden"); }).catch(() => {});
+  }
 } else {
   matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applyTheme);
 }

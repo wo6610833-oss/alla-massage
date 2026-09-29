@@ -1,35 +1,99 @@
 {
+  "_help": "Настройки бота и приложения. blockMinutes: сколько времени занимает сеанс вместе с перерывом. workDays: 0=вс, 1=пн ... 6=сб. Специалист с enabled:false не показывается клиентам.",
   "address": "Nicaragua 5812, Palermo, Buenos Aires",
   "mapUrl": "https://maps.google.com/?q=Nicaragua+5812,+Buenos+Aires",
   "phone": "+54 9 11 2698-6688",
   "whatsapp": "https://wa.me/5491126986688",
   "telegram": "Alla_Physical_therapy_Massage_BA",
+  "bot": "AllaMassage_BA_BOT",
+  "api": "https://alla-massage-bot.wo6610833.workers.dev/api/book",
+  "utcOffsetMinutes": -180,
+  "daysAhead": 21,
+  "slotStepMinutes": 30,
+  "blockMinutes": {
+    "60": 90,
+    "70": 90,
+    "90": 120,
+    "120": 150
+  },
   "payments": [
     "ARS",
     "RUB",
     "USDT"
   ],
-  "workDays": [
-    1,
-    2,
-    3,
-    4,
-    5,
-    6
+  "prepay": {
+    "enabled": true,
+    "usd": 20,
+    "methods": {
+      "ru": "Bybit, российская карта или аргентинская карта",
+      "es": "Bybit, tarjeta rusa o tarjeta argentina",
+      "en": "Bybit, Russian card or Argentine card"
+    },
+    "requisites": ""
+  },
+  "specialists": [
+    {
+      "id": "alla",
+      "enabled": true,
+      "photo": "img/alla-hero",
+      "name": {
+        "ru": "Алла",
+        "es": "Alla",
+        "en": "Alla"
+      },
+      "role": {
+        "ru": "Врач ЛФК, мануальный терапевт, реабилитолог",
+        "es": "Médica en kinesiología, terapeuta manual",
+        "en": "Exercise therapy MD, manual therapist"
+      },
+      "services": [
+        "deep",
+        "therapy",
+        "prenatal",
+        "lymph",
+        "relax",
+        "rehab"
+      ],
+      "workDays": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "from": "10:30",
+      "to": "19:30"
+    },
+    {
+      "id": "second",
+      "enabled": false,
+      "photo": "img/hands-back",
+      "name": {
+        "ru": "Второй специалист",
+        "es": "Segunda especialista",
+        "en": "Second specialist"
+      },
+      "role": {
+        "ru": "Массажист",
+        "es": "Masajista",
+        "en": "Massage therapist"
+      },
+      "services": [
+        "deep",
+        "relax"
+      ],
+      "workDays": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "from": "10:30",
+      "to": "19:30"
+    }
   ],
-  "hours": [
-    "10:00",
-    "11:00",
-    "12:00",
-    "13:00",
-    "14:00",
-    "15:00",
-    "16:00",
-    "17:00",
-    "18:00",
-    "19:00"
-  ],
-  "daysAhead": 14,
   "services": [
     {
       "id": "deep",
@@ -56,7 +120,8 @@
           "min": 120,
           "usd": 90
         }
-      ]
+      ],
+      "photo": "img/hands-neck"
     },
     {
       "id": "therapy",
@@ -79,7 +144,8 @@
           "min": 90,
           "usd": 75
         }
-      ]
+      ],
+      "photo": "img/hands-back"
     },
     {
       "id": "prenatal",
@@ -98,7 +164,8 @@
           "min": 70,
           "usd": 55
         }
-      ]
+      ],
+      "photo": "img/prenatal"
     },
     {
       "id": "lymph",
@@ -117,7 +184,8 @@
           "min": 120,
           "usd": 90
         }
-      ]
+      ],
+      "photo": "img/room-table"
     },
     {
       "id": "relax",
@@ -140,7 +208,8 @@
           "min": 90,
           "usd": 65
         }
-      ]
+      ],
+      "photo": "img/lamp"
     },
     {
       "id": "rehab",
@@ -163,9 +232,8 @@
           "min": 90,
           "usd": 75
         }
-      ]
+      ],
+      "photo": "img/rehab-zone"
     }
-  ],
-  "_help": "Настройки: услуги, цены, график. workDays: 0=воскресенье...6=суббота",
-  "api": "https://alla-massage-bot.wo6610833.workers.dev/api/book"
+  ]
 }
