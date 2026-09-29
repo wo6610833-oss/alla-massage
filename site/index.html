@@ -1,0 +1,603 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dr Alla | Masaje terapéutico y rehabilitación en Palermo</title>
+<meta name="description" content="Masaje terapéutico, terapia manual, masaje para embarazadas y rehabilitación con Alla, médica en kinesiología. Estudio en Palermo, Nicaragua 5812, Buenos Aires. Reservas por Telegram.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f3f1ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121110" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dr Alla">
+<meta property="og:title" content="Dr Alla | Masaje y rehabilitación en Palermo, Buenos Aires">
+<meta property="og:description" content="Masaje terapéutico, terapia manual y rehabilitación física. Reservá por Telegram.">
+<meta property="og:url" content="https://wo6610833-oss.github.io/alla-massage/site/">
+<meta property="og:image" content="https://wo6610833-oss.github.io/alla-massage/img/alla-hero.jpg">
+<meta property="og:locale" content="es_AR">
+<meta property="og:locale:alternate" content="ru_RU">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Onest:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="preload" as="image" href="../img/alla-hero-sm.jpg" imagesrcset="../img/alla-hero-sm.jpg 640w, ../img/alla-hero.jpg 1400w" imagesizes="(min-width: 900px) 45vw, 100vw">
+<style>
+:root{
+  --bg:#f3f1ee;--surface:#fbfaf8;--text:#171412;--muted:#675f57;--accent:#7f5536;--accent-ink:#fbfaf8;
+  --line:color-mix(in srgb,var(--text) 12%,transparent);
+  --tint:color-mix(in srgb,var(--accent) 8%,var(--surface));
+  --shadow:0 18px 40px -24px color-mix(in srgb,var(--accent) 45%,transparent);
+  --r:20px;--gut:16px;--max:1180px;
+  --serif:"Cormorant Garamond",Georgia,serif;--sans:"Onest",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+@media (prefers-color-scheme:dark){
+  :root{--bg:#121110;--surface:#1c1a18;--text:#efe9e1;--muted:#a59b90;--accent:#cfa87f;--accent-ink:#171412;
+    --shadow:0 18px 40px -24px rgba(0,0,0,.6)}
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:76px}
+body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.6 var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3{font-family:var(--serif);font-weight:600;letter-spacing:-.01em;margin:0;line-height:1.08}
+h2{font-size:clamp(2.1rem,5.2vw,3.4rem)}
+p{margin:0}
+.wrap{max-width:var(--max);margin:0 auto;padding:0 var(--gut)}
+@media (min-width:768px){:root{--gut:32px}}
+section{padding:72px 0}
+@media (min-width:900px){section{padding:112px 0}}
+.muted{color:var(--muted)}
+.ph{font-size:1.15em;line-height:1;vertical-align:-.15em}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:.55em;justify-content:center;white-space:nowrap;
+  min-height:48px;padding:0 26px;border-radius:999px;background:var(--accent);color:var(--accent-ink);
+  font:600 16px/1 var(--sans);text-decoration:none;border:0;cursor:pointer;
+  transition:transform .25s var(--ease),box-shadow .25s var(--ease),filter .2s}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow);filter:brightness(1.05)}
+.btn:active{transform:translateY(1px) scale(.98)}
+.btn.sm{min-height:40px;padding:0 18px;font-size:15px}
+.link{display:inline-flex;align-items:center;gap:.4em;color:var(--accent);font-weight:500;text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 35%,transparent);padding-bottom:1px}
+.link:hover{border-bottom-color:var(--accent)}
+
+/* header */
+.top{position:fixed;inset:0 0 auto 0;z-index:20;background:color-mix(in srgb,var(--bg) 86%,transparent);
+  -webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;gap:16px;height:64px}
+.brand{font:600 1.6rem/1 var(--serif);text-decoration:none;letter-spacing:-.01em;margin-right:auto}
+.nav{display:none;gap:26px}
+.nav a{text-decoration:none;color:var(--muted);font-size:15px}
+.nav a:hover{color:var(--text)}
+@media (min-width:960px){.nav{display:flex}.top .wrap{height:72px}}
+.lang{display:flex;border:1px solid var(--line);border-radius:999px;padding:3px}
+.lang button{appearance:none;border:0;background:none;color:var(--muted);font:600 12px/1 var(--sans);letter-spacing:.04em;
+  min-width:34px;height:30px;border-radius:999px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--text);color:var(--bg)}
+@media (max-width:420px){.top .btn.sm{padding:0 14px}.brand{font-size:1.4rem}}
+
+/* hero */
+.hero{position:relative;min-height:100dvh;display:grid;padding:0}
+.hero-media{position:absolute;inset:0;overflow:hidden;background:#171412}
+.hero-media img{width:100%;height:100%;object-fit:cover;object-position:60% 30%}
+.hero-media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,17,16,.15) 30%,rgba(18,17,16,.55) 58%,rgba(18,17,16,.92) 100%)}
+.hero-copy{position:relative;align-self:end;padding:120px var(--gut) calc(40px + env(safe-area-inset-bottom));color:#fbfaf8;max-width:640px}
+.hero h1{font-size:clamp(2.6rem,11vw,3.4rem);line-height:1.04;margin-bottom:18px}
+.hero h1 em{font-style:italic;font-weight:500;color:#e6c9a6;display:inline-block;padding-bottom:4px;line-height:1.1}
+.hero p{font-size:17px;line-height:1.55;color:rgba(251,250,248,.84);max-width:34ch;margin-bottom:28px}
+.hero .btn{background:#fbfaf8;color:#171412;min-height:54px;padding:0 32px;font-size:17px}
+@media (min-width:900px){
+  .hero{grid-template-columns:1.05fr .95fr;align-items:center;gap:56px;max-width:var(--max);margin:0 auto;padding:96px var(--gut) 40px}
+  .hero-media{position:relative;inset:auto;height:calc(100dvh - 136px);min-height:560px;max-height:860px;border-radius:var(--r);order:2;box-shadow:var(--shadow)}
+  .hero-media::after{display:none}
+  .hero-copy{align-self:center;padding:0;color:var(--text);max-width:none}
+  .hero h1{font-size:clamp(3rem,4.4vw,4.1rem);text-wrap:balance}
+  .hero h1 em{display:inline}
+  .hero h1 em{color:var(--accent)}
+  .hero p{color:var(--muted);font-size:19px;max-width:38ch}
+  .hero .btn{background:var(--accent);color:var(--accent-ink)}
+}
+
+/* about */
+.about .wrap{display:grid;gap:40px}
+.about .lead{font:500 clamp(1.7rem,4.4vw,2.6rem)/1.2 var(--serif);max-width:24ch}
+.about .body{max-width:56ch;color:var(--muted);font-size:17px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;list-style:none;margin:0;padding:0}
+.chips li{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:15px;font-weight:500}
+.chips .ph{color:var(--accent)}
+.hours{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:15px}
+@media (min-width:900px){
+  .about .wrap{grid-template-columns:5fr 7fr;column-gap:72px;align-items:start}
+  .about h2{grid-row:span 3}
+}
+
+/* services */
+.services{background:var(--surface);border-block:1px solid var(--line)}
+.sv-head{display:grid;gap:14px;margin-bottom:40px;max-width:60ch}
+.sv-grid{display:grid;gap:14px;list-style:none;margin:0;padding:0}
+@media (min-width:820px){.sv-grid{grid-template-columns:1fr 1fr;gap:18px}}
+.sv{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:14px;border-radius:var(--r);background:var(--bg);align-items:start}
+.sv img{width:96px;height:120px;object-fit:cover;border-radius:14px;background:var(--line)}
+.sv h3{font-size:1.55rem;line-height:1.1;margin:4px 0 6px}
+.sv p{color:var(--muted);font-size:15px;line-height:1.5;margin-bottom:12px}
+.opts{display:flex;flex-wrap:wrap;gap:6px}
+.opt{display:inline-flex;gap:6px;align-items:baseline;padding:6px 12px;border-radius:999px;background:var(--surface);border:1px solid var(--line);font-size:14px;white-space:nowrap}
+.opt b{font-weight:600;color:var(--accent)}
+@media (min-width:820px){.sv{grid-template-columns:128px 1fr;gap:22px;padding:16px}.sv img{width:128px;height:160px}}
+.sv.feat{background:var(--tint)}
+.skel{height:148px;border-radius:var(--r);background:linear-gradient(90deg,var(--bg) 0%,color-mix(in srgb,var(--bg) 60%,var(--surface)) 50%,var(--bg) 100%);background-size:200% 100%}
+@media (prefers-reduced-motion:no-preference){.skel{animation:sh 1.4s linear infinite}}
+@keyframes sh{to{background-position:-200% 0}}
+.sv-foot{display:flex;flex-wrap:wrap;align-items:center;gap:16px 24px;margin-top:36px}
+.err{padding:22px;border-radius:var(--r);background:var(--bg);color:var(--muted)}
+
+/* studio bento */
+.studio-head{display:grid;gap:14px;margin-bottom:36px;max-width:58ch}
+.bento{display:grid;gap:10px;grid-template-columns:1fr 1fr;list-style:none;margin:0;padding:0}
+.bento li{border-radius:var(--r);overflow:hidden;background:var(--surface);aspect-ratio:3/4}
+.bento img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+.bento li:hover img{transform:scale(1.03)}
+.bento .b1{grid-column:span 2;aspect-ratio:4/5}
+.bento .b6{grid-column:span 2;aspect-ratio:16/10}
+@media (min-width:820px){
+  .bento{grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,minmax(220px,300px)) minmax(220px,280px);gap:14px}
+  .bento li{aspect-ratio:auto}
+  .bento .b1{grid-column:1/3;grid-row:1/3;aspect-ratio:auto}
+  .bento .b2{grid-column:3;grid-row:1/3}
+  .bento .b3{grid-column:4;grid-row:1}
+  .bento .b4{grid-column:4;grid-row:2}
+  .bento .b5{grid-column:1/2;grid-row:3}
+  .bento .b6{grid-column:2/5;grid-row:3;aspect-ratio:auto}
+  .bento .b6 img{object-position:50% 40%}
+}
+
+/* booking */
+.book{background:var(--tint)}
+.book .wrap{display:grid;gap:40px}
+.book-side{display:grid;gap:22px;align-content:start}
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.step{display:grid;grid-template-columns:52px 1fr;gap:18px;position:relative;padding-bottom:30px}
+.step:last-child{padding-bottom:0}
+.step:not(:last-child)::before{content:"";position:absolute;left:25px;top:56px;bottom:6px;width:1px;background:color-mix(in srgb,var(--accent) 35%,transparent)}
+.step i{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:var(--surface);color:var(--accent);font-size:24px;border:1px solid var(--line)}
+.step h3{font:600 1.2rem/1.3 var(--sans);letter-spacing:0;margin:12px 0 4px}
+.step p{color:var(--muted);max-width:44ch}
+.alt{color:var(--muted);font-size:15px;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center}
+@media (min-width:900px){.book .wrap{grid-template-columns:5fr 6fr;column-gap:88px}.book-side{position:sticky;top:120px}}
+
+/* location */
+.loc .wrap{display:grid;gap:28px}
+.map{border-radius:var(--r);overflow:hidden;background:var(--surface);border:1px solid var(--line);aspect-ratio:4/3}
+.map iframe{width:100%;height:100%;border:0;display:block}
+.loc-info{display:grid;gap:28px;align-content:start}
+.addr{font:500 clamp(1.5rem,3.6vw,2rem)/1.2 var(--serif)}
+.pay{padding:22px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line);display:grid;gap:14px}
+.pay h3{font:600 1rem/1.3 var(--sans);letter-spacing:0}
+.cur{display:flex;flex-wrap:wrap;gap:8px;list-style:none;margin:0;padding:0}
+.cur li{padding:8px 16px;border-radius:999px;background:var(--bg);font-weight:600;font-size:15px;letter-spacing:.02em}
+.pay p{color:var(--muted);font-size:15px}
+@media (min-width:900px){.loc .wrap{grid-template-columns:7fr 5fr;column-gap:56px;align-items:stretch}.map{aspect-ratio:auto;min-height:460px}.loc h2{grid-column:1/-1}}
+
+/* footer */
+footer{border-top:1px solid var(--line);padding:48px 0 calc(40px + env(safe-area-inset-bottom));background:var(--surface)}
+footer .wrap{display:grid;gap:28px}
+.f-brand{font:600 2rem/1 var(--serif)}
+.f-list{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+.f-list a,.f-list span{display:inline-flex;gap:10px;align-items:center;text-decoration:none;color:var(--muted)}
+.f-list a:hover{color:var(--text)}
+.f-list .ph{color:var(--accent)}
+.f-copy{color:var(--muted);font-size:13px}
+@media (min-width:820px){footer .wrap{grid-template-columns:1fr 2fr;align-items:start}.f-list{grid-template-columns:1fr 1fr;gap:14px 32px}.f-copy{grid-column:1/-1}}
+
+/* motion */
+@media (prefers-reduced-motion:no-preference){
+  .js .rv{opacity:0;transform:translateY(18px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+  .js .rv.in{opacity:1;transform:none}
+  .hero-copy>*{animation:up .9s var(--ease) both}
+  .hero-copy>*:nth-child(2){animation-delay:.08s}
+  .hero-copy>*:nth-child(3){animation-delay:.16s}
+  @keyframes up{from{opacity:0;transform:translateY(16px)}}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">Dr Alla</a>
+    <nav class="nav" aria-label="Menu">
+      <a href="#about" data-i18n="nav.about"></a>
+      <a href="#services" data-i18n="nav.services"></a>
+      <a href="#studio" data-i18n="nav.studio"></a>
+      <a href="#location" data-i18n="nav.location"></a>
+    </nav>
+    <div class="lang" role="group" aria-label="Idioma / Язык / Language">
+      <button type="button" data-lang="es">ES</button>
+      <button type="button" data-lang="ru">RU</button>
+      <button type="button" data-lang="en">EN</button>
+    </div>
+    <a class="btn sm" data-book href="https://t.me/AllaMassage_BA_BOT?start=site" target="_blank" rel="noopener" data-i18n="cta"></a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="hero-media">
+      <img src="../img/alla-hero-sm.jpg" srcset="../img/alla-hero-sm.jpg 640w, ../img/alla-hero.jpg 1400w" sizes="(min-width: 900px) 45vw, 100vw"
+           alt="" data-i18n-alt="alt.hero" width="933" height="1400" fetchpriority="high">
+    </div>
+    <div class="hero-copy">
+      <h1 data-i18n-html="hero.title"></h1>
+      <p data-i18n="hero.sub"></p>
+      <a class="btn" data-book href="https://t.me/AllaMassage_BA_BOT?start=site" target="_blank" rel="noopener"><i class="ph ph-telegram-logo" aria-hidden="true"></i><span data-i18n="cta"></span></a>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap">
+      <h2 class="rv" data-i18n="about.title"></h2>
+      <p class="lead rv" data-i18n="about.lead"></p>
+      <div class="rv" style="display:grid;gap:26px">
+        <p class="body" data-i18n="about.body"></p>
+        <ul class="chips">
+          <li><i class="ph ph-stethoscope" aria-hidden="true"></i><span data-i18n="chip.md"></span></li>
+          <li><i class="ph ph-hand" aria-hidden="true"></i><span data-i18n="chip.manual"></span></li>
+          <li><i class="ph ph-hand-heart" aria-hidden="true"></i><span data-i18n="chip.massage"></span></li>
+          <li><i class="ph ph-person-simple-walk" aria-hidden="true"></i><span data-i18n="chip.rehab"></span></li>
+        </ul>
+        <p class="hours" id="hours" hidden><i class="ph ph-clock" aria-hidden="true"></i><span></span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <div class="wrap">
+      <div class="sv-head rv">
+        <h2 data-i18n="sv.title"></h2>
+        <p class="muted" id="sv-note"></p>
+      </div>
+      <ul class="sv-grid" id="sv-grid" aria-busy="true">
+        <li class="skel"></li><li class="skel"></li><li class="skel"></li><li class="skel"></li>
+      </ul>
+      <div class="sv-foot">
+        <a class="btn" data-book href="https://t.me/AllaMassage_BA_BOT?start=site" target="_blank" rel="noopener"><i class="ph ph-telegram-logo" aria-hidden="true"></i><span data-i18n="cta"></span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="studio" id="studio">
+    <div class="wrap">
+      <div class="studio-head rv">
+        <h2 data-i18n="st.title"></h2>
+        <p class="muted" data-i18n="st.sub"></p>
+      </div>
+      <ul class="bento">
+        <li class="b1 rv"><img loading="lazy" src="../img/studio-overview-sm.jpg" srcset="../img/studio-overview-sm.jpg 640w, ../img/studio-overview.jpg 1400w" sizes="(min-width:820px) 50vw, 100vw" alt="" data-i18n-alt="alt.overview"></li>
+        <li class="b2 rv"><img loading="lazy" src="../img/room-table-2-sm.jpg" alt="" data-i18n-alt="alt.room"></li>
+        <li class="b3 rv"><img loading="lazy" src="../img/lounge-sm.jpg" alt="" data-i18n-alt="alt.lounge"></li>
+        <li class="b4 rv"><img loading="lazy" src="../img/equipment-sm.jpg" alt="" data-i18n-alt="alt.equipment"></li>
+        <li class="b5 rv"><img loading="lazy" src="../img/entrance-sm.jpg" alt="" data-i18n-alt="alt.entrance"></li>
+        <li class="b6 rv"><img loading="lazy" src="../img/shelves-sm.jpg" srcset="../img/shelves-sm.jpg 640w, ../img/shelves.jpg 1400w" sizes="(min-width:820px) 75vw, 100vw" alt="" data-i18n-alt="alt.shelves"></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="book" id="book">
+    <div class="wrap">
+      <div class="book-side rv">
+        <h2 data-i18n="bk.title"></h2>
+        <div><a class="btn" data-book href="https://t.me/AllaMassage_BA_BOT?start=site" target="_blank" rel="noopener"><i class="ph ph-telegram-logo" aria-hidden="true"></i><span data-i18n="cta"></span></a></div>
+        <p class="alt"><span data-i18n="bk.ask"></span>
+          <a class="link tg-link" href="https://t.me/Alla_Physical_therapy_Massage_BA" target="_blank" rel="noopener"><i class="ph ph-paper-plane-tilt" aria-hidden="true"></i>Telegram</a>
+          <a class="link wa-link" href="https://wa.me/5491126986688" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo" aria-hidden="true"></i>WhatsApp</a>
+        </p>
+      </div>
+      <ol class="steps">
+        <li class="step rv"><i class="ph ph-telegram-logo" aria-hidden="true"></i><div><h3 data-i18n="bk.s1"></h3><p data-i18n="bk.s1d"></p></div></li>
+        <li class="step rv"><i class="ph ph-calendar-check" aria-hidden="true"></i><div><h3 data-i18n="bk.s2"></h3><p data-i18n="bk.s2d"></p></div></li>
+        <li class="step rv"><i class="ph ph-check-circle" aria-hidden="true"></i><div><h3 data-i18n="bk.s3"></h3><p><span data-i18n="bk.s3d"></span> <span id="prepay"></span></p></div></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="loc" id="location">
+    <div class="wrap">
+      <h2 class="rv" data-i18n="loc.title"></h2>
+      <div class="map rv">
+        <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Google Maps: Nicaragua 5812, Buenos Aires"
+          src="https://maps.google.com/maps?q=Nicaragua%205812%2C%20Buenos%20Aires&amp;output=embed"></iframe>
+      </div>
+      <div class="loc-info rv">
+        <div style="display:grid;gap:14px">
+          <p class="addr" id="addr">Nicaragua 5812, Palermo, Buenos Aires</p>
+          <a class="link map-link" href="https://maps.google.com/?q=Nicaragua+5812,+Buenos+Aires" target="_blank" rel="noopener"><i class="ph ph-map-pin" aria-hidden="true"></i><span data-i18n="loc.open"></span></a>
+        </div>
+        <div class="pay">
+          <h3 data-i18n="loc.pay"></h3>
+          <ul class="cur" id="cur"><li>ARS</li><li>RUB</li><li>USDT</li></ul>
+          <p id="pay-note" hidden></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div style="display:grid;gap:10px">
+      <div class="f-brand">Dr Alla</div>
+      <p class="muted" data-i18n="ft.tag"></p>
+    </div>
+    <ul class="f-list">
+      <li><span><i class="ph ph-map-pin" aria-hidden="true"></i><span class="f-addr">Nicaragua 5812, Palermo, Buenos Aires</span></span></li>
+      <li><a class="f-phone" href="tel:+5491126986688"><i class="ph ph-phone" aria-hidden="true"></i><span>+54 9 11 2698-6688</span></a></li>
+      <li><a class="wa-link" href="https://wa.me/5491126986688" target="_blank" rel="noopener"><i class="ph ph-whatsapp-logo" aria-hidden="true"></i>WhatsApp</a></li>
+      <li><a class="tg-link" href="https://t.me/Alla_Physical_therapy_Massage_BA" target="_blank" rel="noopener"><i class="ph ph-paper-plane-tilt" aria-hidden="true"></i><span data-i18n="ft.tg"></span></a></li>
+      <li><a data-book href="https://t.me/AllaMassage_BA_BOT?start=site" target="_blank" rel="noopener"><i class="ph ph-telegram-logo" aria-hidden="true"></i>@AllaMassage_BA_BOT</a></li>
+    </ul>
+    <p class="f-copy">© <span id="yr"></span> Dr Alla</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  document.documentElement.classList.add("js");
+  var BOT = "https://t.me/AllaMassage_BA_BOT?start=site";
+
+  var T = {
+    es:{
+      cta:"Reservar",
+      "nav.about":"Alla","nav.services":"Servicios","nav.studio":"El estudio","nav.location":"Ubicación",
+      "hero.title":"Masaje y rehabilitación con <em>mirada médica</em>",
+      "hero.sub":"Alla es médica en kinesiología y terapeuta manual. Estudio privado en Palermo, Buenos Aires.",
+      "about.title":"Quién te atiende",
+      "about.lead":"Alla es médica en kinesiología, terapeuta manual, masajista y especialista en rehabilitación física.",
+      "about.body":"Por eso acá el masaje no es solo relajación. Se puede trabajar una contractura, recuperar movilidad después de una lesión o recibir un masaje cómodo durante el embarazo.",
+      "chip.md":"Médica en kinesiología","chip.manual":"Terapeuta manual","chip.massage":"Masajista","chip.rehab":"Rehabilitación física",
+      "sv.title":"Servicios y precios",
+      "sv.note":"Precios en USD. Podés pagar en {pay}.",
+      "sv.err":"No pudimos cargar los servicios. Escribinos por Telegram o WhatsApp y te pasamos los precios.",
+      min:"min",
+      "st.title":"El estudio",
+      "st.sub":"Sala de masaje, zona de rehabilitación con espalderas y fitball, equipos de electroestimulación y ultrasonido.",
+      "bk.title":"Cómo reservar",
+      "bk.s1":"Abrí el bot","bk.s1d":"Tocá Reservar y se abre @AllaMassage_BA_BOT en Telegram.",
+      "bk.s2":"Elegí servicio y horario","bk.s2d":"Ves los horarios libres y elegís el que te queda mejor.",
+      "bk.s3":"Confirmá","bk.s3d":"La confirmación te llega en el mismo chat.",
+      "bk.prepay":"Se pide una seña de {usd} USD.",
+      "bk.ask":"¿Tenés preguntas? Escribile a Alla:",
+      "loc.title":"Dónde estamos","loc.open":"Abrir en Google Maps","loc.pay":"Formas de pago",
+      "loc.prepay":"Seña: {methods}.",
+      "ft.tag":"Masaje, terapia manual y rehabilitación en Palermo.","ft.tg":"Telegram de Alla",
+      hours:"{days}, de {from} a {to}",
+      days:["dom","lun","mar","mié","jue","vie","sáb"], range:"{a} a {b}",
+      "alt.hero":"Alla haciendo un masaje de espalda a una clienta",
+      "alt.overview":"Vista general del estudio con zona de rehabilitación y piso a cuadros",
+      "alt.room":"Camilla de masaje en la sala",
+      "alt.lounge":"Sala de espera con sillas verdes y cuadros",
+      "alt.equipment":"Equipos de electroestimulación, bandas y mancuernas",
+      "alt.entrance":"Entrada del estudio con espejo",
+      "alt.shelves":"Estantería con toallas y materiales para las sesiones",
+      title:"Dr Alla | Masaje terapéutico y rehabilitación en Palermo"
+    },
+    ru:{
+      cta:"Записаться",
+      "nav.about":"Алла","nav.services":"Услуги","nav.studio":"Студия","nav.location":"Адрес",
+      "hero.title":"Массаж и реабилитация <em>от врача</em>",
+      "hero.sub":"Алла, врач ЛФК и мануальный терапевт. Частная студия в Палермо, Буэнос-Айрес.",
+      "about.title":"Кто вас примет",
+      "about.lead":"Алла: врач ЛФК, мануальный терапевт, массажист и специалист по физической реабилитации.",
+      "about.body":"Поэтому массаж здесь не только про расслабление. Можно проработать зажатые мышцы, восстановить подвижность после травмы или спокойно сделать массаж во время беременности.",
+      "chip.md":"Врач ЛФК","chip.manual":"Мануальный терапевт","chip.massage":"Массажист","chip.rehab":"Физическая реабилитация",
+      "sv.title":"Услуги и цены",
+      "sv.note":"Цены в USD. Оплатить можно в {pay}.",
+      "sv.err":"Не получилось загрузить услуги. Напишите в Telegram или WhatsApp, и мы пришлём цены.",
+      min:"мин",
+      "st.title":"Студия",
+      "st.sub":"Массажный кабинет, зона реабилитации со шведской стенкой и фитболом, аппараты электростимуляции и ультразвука.",
+      "bk.title":"Как записаться",
+      "bk.s1":"Откройте бота","bk.s1d":"Нажмите «Записаться», и в Telegram откроется @AllaMassage_BA_BOT.",
+      "bk.s2":"Выберите услугу и время","bk.s2d":"Бот покажет свободные окна, выберите удобное.",
+      "bk.s3":"Подтвердите","bk.s3d":"Подтверждение придёт в тот же чат.",
+      "bk.prepay":"Нужна предоплата {usd} USD.",
+      "bk.ask":"Есть вопросы? Напишите Алле:",
+      "loc.title":"Где мы","loc.open":"Открыть в Google Maps","loc.pay":"Оплата",
+      "loc.prepay":"Предоплата: {methods}.",
+      "ft.tag":"Массаж, мануальная терапия и реабилитация в Палермо.","ft.tg":"Telegram Аллы",
+      hours:"{days}, с {from} до {to}",
+      days:["вс","пн","вт","ср","чт","пт","сб"], range:"{a}-{b}",
+      "alt.hero":"Алла делает массаж спины клиентке",
+      "alt.overview":"Общий вид студии: зона реабилитации и пол в клетку",
+      "alt.room":"Массажный стол в кабинете",
+      "alt.lounge":"Зона ожидания с зелёными креслами и постерами",
+      "alt.equipment":"Аппараты электростимуляции, резинки и гантели",
+      "alt.entrance":"Вход в студию с зеркалом",
+      "alt.shelves":"Стеллаж с полотенцами и расходниками",
+      title:"Dr Alla | Массаж и реабилитация в Буэнос-Айресе"
+    },
+    en:{
+      cta:"Book",
+      "nav.about":"Alla","nav.services":"Services","nav.studio":"Studio","nav.location":"Location",
+      "hero.title":"Massage and rehab <em>from a physician</em>",
+      "hero.sub":"Alla is an exercise therapy physician and manual therapist. Private studio in Palermo, Buenos Aires.",
+      "about.title":"Who you'll see",
+      "about.lead":"Alla is an exercise therapy physician, manual therapist, massage therapist and physical rehabilitation specialist.",
+      "about.body":"So massage here is not only about relaxing. You can work on tight muscles, regain mobility after an injury or get a comfortable massage during pregnancy.",
+      "chip.md":"Exercise therapy physician","chip.manual":"Manual therapist","chip.massage":"Massage therapist","chip.rehab":"Physical rehabilitation",
+      "sv.title":"Services and prices",
+      "sv.note":"Prices in USD. You can pay in {pay}.",
+      "sv.err":"We couldn't load the services. Message us on Telegram or WhatsApp and we'll send the prices.",
+      min:"min",
+      "st.title":"The studio",
+      "st.sub":"Massage room, rehab area with wall bars and a fitball, electrostimulation and ultrasound equipment.",
+      "bk.title":"How booking works",
+      "bk.s1":"Open the bot","bk.s1d":"Tap Book and @AllaMassage_BA_BOT opens in Telegram.",
+      "bk.s2":"Pick a service and time","bk.s2d":"See the open slots and choose the one that suits you.",
+      "bk.s3":"Confirm","bk.s3d":"Your confirmation arrives in the same chat.",
+      "bk.prepay":"A {usd} USD prepayment is required.",
+      "bk.ask":"Questions? Message Alla:",
+      "loc.title":"Where to find us","loc.open":"Open in Google Maps","loc.pay":"Payment",
+      "loc.prepay":"Prepayment: {methods}.",
+      "ft.tag":"Massage, manual therapy and rehabilitation in Palermo.","ft.tg":"Alla on Telegram",
+      hours:"{days}, {from} to {to}",
+      days:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"], range:"{a} to {b}",
+      "alt.hero":"Alla giving a client a back massage",
+      "alt.overview":"Studio overview with the rehab area and checkered floor",
+      "alt.room":"Massage table in the treatment room",
+      "alt.lounge":"Waiting area with green chairs and posters",
+      "alt.equipment":"Electrostimulation devices, resistance bands and dumbbells",
+      "alt.entrance":"Studio entrance with a mirror",
+      "alt.shelves":"Shelving with towels and session supplies",
+      title:"Dr Alla | Massage and rehabilitation in Buenos Aires"
+    }
+  };
+
+  function store(k,v){try{ if(v===undefined) return localStorage.getItem(k); localStorage.setItem(k,v); }catch(e){ return null; }}
+  function fmt(s,o){return String(s).replace(/\{(\w+)\}/g,function(_,k){return o[k]!=null?o[k]:"";});}
+  function listJoin(arr,lang){
+    var and={es:" o ",ru:" или ",en:" or "}[lang];
+    if(arr.length<2) return arr.join("");
+    return arr.slice(0,-1).join(", ")+and+arr[arr.length-1];
+  }
+
+  var lang = store("lang");
+  if(!T[lang]){
+    var nl=(navigator.language||"es").slice(0,2).toLowerCase();
+    lang = nl==="ru"||nl==="en" ? nl : "es";
+  }
+  var cfg = null, cfgFailed = false;
+
+  function render(){
+    var t=T[lang];
+    document.documentElement.lang=lang;
+    document.title=t.title;
+    document.querySelectorAll("[data-i18n]").forEach(function(el){el.textContent=t[el.getAttribute("data-i18n")];});
+    document.querySelectorAll("[data-i18n-html]").forEach(function(el){el.innerHTML=t[el.getAttribute("data-i18n-html")];});
+    document.querySelectorAll("[data-i18n-alt]").forEach(function(el){el.alt=t[el.getAttribute("data-i18n-alt")];});
+    document.querySelectorAll(".lang button").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.lang===lang?"true":"false");});
+    var pays=(cfg&&cfg.payments)||["ARS","RUB","USDT"];
+    document.getElementById("sv-note").textContent=fmt(t["sv.note"],{pay:listJoin(pays,lang)});
+    renderServices();
+    renderCfgBits();
+  }
+
+  function renderServices(){
+    var grid=document.getElementById("sv-grid"), t=T[lang];
+    if(cfgFailed){
+      grid.removeAttribute("aria-busy");
+      grid.innerHTML="";
+      var li=document.createElement("li"); li.className="err"; li.textContent=t["sv.err"]; grid.appendChild(li);
+      return;
+    }
+    if(!cfg) return;
+    grid.removeAttribute("aria-busy");
+    grid.innerHTML="";
+    (cfg.services||[]).forEach(function(s,i){
+      var li=document.createElement("li"); li.className="sv"+(s.id==="prenatal"?" feat":"");
+      var img=document.createElement("img");
+      img.loading="lazy"; img.alt=""; img.width=128; img.height=160;
+      if(s.photo){ img.src="../"+s.photo+"-sm.jpg"; } else { img.style.visibility="hidden"; }
+      var box=document.createElement("div");
+      var h=document.createElement("h3"); h.textContent=(s.name&&s.name[lang])||"";
+      var p=document.createElement("p"); p.textContent=(s.desc&&s.desc[lang])||"";
+      var o=document.createElement("div"); o.className="opts";
+      (s.options||[]).forEach(function(op){
+        var sp=document.createElement("span"); sp.className="opt";
+        sp.innerHTML="<span></span><b></b>";
+        sp.children[0].textContent=op.min+" "+t.min;
+        sp.children[1].textContent=op.usd+" USD";
+        o.appendChild(sp);
+      });
+      box.appendChild(h); box.appendChild(p); box.appendChild(o);
+      li.appendChild(img); li.appendChild(box);
+      grid.appendChild(li);
+    });
+  }
+
+  function renderCfgBits(){
+    if(!cfg) return;
+    var t=T[lang];
+    // prepay
+    var pp=document.getElementById("prepay"), pn=document.getElementById("pay-note");
+    if(cfg.prepay&&cfg.prepay.enabled&&cfg.prepay.usd){
+      pp.textContent=fmt(t["bk.prepay"],{usd:cfg.prepay.usd});
+      var m=cfg.prepay.methods&&cfg.prepay.methods[lang];
+      if(m){pn.textContent=fmt(t["loc.prepay"],{methods:m});pn.hidden=false;}
+    } else { pp.textContent=""; pn.hidden=true; }
+    // hours from the first enabled specialist
+    var sp=(cfg.specialists||[]).filter(function(x){return x.enabled;})[0];
+    var hb=document.getElementById("hours");
+    if(sp&&sp.workDays&&sp.workDays.length&&sp.from&&sp.to){
+      var d=sp.workDays.slice().sort(), consecutive=d.every(function(v,i){return i===0||v===d[i-1]+1;});
+      var days=consecutive&&d.length>2 ? fmt(t.range,{a:t.days[d[0]],b:t.days[d[d.length-1]]}) : d.map(function(x){return t.days[x];}).join(", ");
+      days=days.charAt(0).toUpperCase()+days.slice(1);
+      hb.querySelector("span").textContent=fmt(t.hours,{days:days,from:sp.from,to:sp.to});
+      hb.hidden=false;
+    }
+  }
+
+  function applyContacts(){
+    if(cfg.address){document.getElementById("addr").textContent=cfg.address;document.querySelector(".f-addr").textContent=cfg.address;}
+    if(cfg.mapUrl) document.querySelectorAll(".map-link").forEach(function(a){a.href=cfg.mapUrl;});
+    if(cfg.whatsapp) document.querySelectorAll(".wa-link").forEach(function(a){a.href=cfg.whatsapp;});
+    if(cfg.telegram) document.querySelectorAll(".tg-link").forEach(function(a){a.href="https://t.me/"+cfg.telegram;});
+    if(cfg.phone){var a=document.querySelector(".f-phone");a.href="tel:"+cfg.phone.replace(/[^\d+]/g,"");a.querySelector("span").textContent=cfg.phone;}
+    if(cfg.payments&&cfg.payments.length){
+      var ul=document.getElementById("cur"); ul.innerHTML="";
+      cfg.payments.forEach(function(p){var li=document.createElement("li");li.textContent=p;ul.appendChild(li);});
+    }
+  }
+
+  // ---- owner statistics ----
+  var isOwner=false;
+  try{
+    if(new URLSearchParams(location.search).get("owner")==="1") store("owner","1");
+    isOwner=store("owner")==="1";
+  }catch(e){}
+  var vid=store("vid");
+  if(!vid){vid=Math.random().toString(36).slice(2)+Date.now().toString(36);store("vid",vid);}
+  function hitUrl(){return cfg&&cfg.api?cfg.api.replace("/api/book","/api/hit"):null;}
+  function track(extra){
+    if(isOwner) return;
+    var u=hitUrl(); if(!u) return;
+    var body={src:"site",vid:vid}; if(extra) for(var k in extra) body[k]=extra[k];
+    var json=JSON.stringify(body);
+    try{
+      if(navigator.sendBeacon && navigator.sendBeacon(u,new Blob([json],{type:"text/plain"}))) return;
+    }catch(e){}
+    try{fetch(u,{method:"POST",headers:{"Content-Type":"application/json"},body:json,keepalive:true}).catch(function(){});}catch(e){}
+  }
+  document.addEventListener("click",function(e){
+    var a=e.target.closest&&e.target.closest("[data-book]");
+    if(a){ a.href=BOT; track({event:"cta"}); }
+  });
+
+  // ---- language switch ----
+  document.querySelectorAll(".lang button").forEach(function(b){
+    b.addEventListener("click",function(){lang=b.dataset.lang;store("lang",lang);render();});
+  });
+
+  // ---- reveal on scroll ----
+  var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var rv=document.querySelectorAll(".rv");
+  if(reduce||!("IntersectionObserver" in window)){ rv.forEach(function(el){el.classList.add("in");}); }
+  else{
+    var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target);}});},{rootMargin:"0px 0px -8% 0px",threshold:.08});
+    rv.forEach(function(el){io.observe(el);});
+  }
+
+  document.getElementById("yr").textContent=new Date().getFullYear();
+  render();
+
+  fetch("../config.json",{cache:"no-cache"})
+    .then(function(r){if(!r.ok) throw new Error(r.status); return r.json();})
+    .then(function(c){cfg=c; applyContacts(); render(); track();})
+    .catch(function(){cfgFailed=true; render();});
+})();
+</script>
+</body>
+</html>
