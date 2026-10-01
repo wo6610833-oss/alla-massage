@@ -812,6 +812,7 @@ async function loadAdmin() {
   } catch { $("admBody").innerHTML = `<div class="empty" style="margin-top:12px">Не получилось загрузить данные. Нажмите ↻ вверху.</div>`; }
 }
 async function admAction(body, okMsg) {
+  if (adm.data?.demo) { toast("Это пример: кнопки заработают в твоём настоящем кабинете"); return; } // будущий владелец до покупки
   try {
     const r = await api("/api/admin", { initData: tg.initData, ...body });
     haptic("success");
@@ -833,6 +834,7 @@ function renderAdmin() {
   }));
   const body = $("admBody");
   body.replaceChildren();
+  if (adm.data.demo) { const n = el("div", "empty", "👀 Пример кабинета с выдуманными данными. Твои настоящие записи появятся здесь после подключения."); n.style.margin = "12px 0 0"; body.append(n); }
   ({ bookings: admBookings, block: admBlock, clients: admClients, stats: admStats, calendar: admCalendar })[adm.tab](body);
 }
 
@@ -1093,7 +1095,11 @@ if (inTelegram) {
   if (API) {
     // Статистика и проверка, не администратор ли открыл приложение
     api("/api/hit", { src: "app", initData: tg.initData }).catch(() => {});
-    api("/api/me", { initData: tg.initData }).then((r) => { if (r.admin) $("adminPill").classList.remove("hidden"); }).catch(() => {});
+    api("/api/me", { initData: tg.initData }).then((r) => {
+      if (!r.admin) return;
+      $("adminPill").classList.remove("hidden");
+      if (new URLSearchParams(location.search).has("cab")) openAdmin(); // кнопка «Мой кабинет» в боте — сразу в кабинет
+    }).catch(() => {});
   }
 } else {
   matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applyTheme);
